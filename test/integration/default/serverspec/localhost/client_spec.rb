@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-hostname = `hostname -f`.rstrip
+hostname = `/opt/puppetlabs/bin/facter fqdn`.rstrip
 
 # Check basic feature
 
