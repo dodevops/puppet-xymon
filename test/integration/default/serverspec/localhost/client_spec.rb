@@ -22,9 +22,9 @@ describe 'After xymon::client' do
     it {
       is_expected.to exist
     }
-    its(:content) {
-      is_expected.to match(/XYMONSERVERS="127\.0\.0\.1"/)
+    its(:content) do
+      is_expected.to match(%r{XYMONSERVERS="127\.0\.0\.1"})
       is_expected.to match(%r{CLIENTHOSTNAME="#{hostname}"})
-    }
+    end
   end
 end

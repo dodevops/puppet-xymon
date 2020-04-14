@@ -50,7 +50,7 @@ describe 'xymon::client' do
         let(:facts) do
           os_facts.merge!(
             sudoversion: '3.0.0',
-            )
+          )
         end
         let(:params) do
           {
