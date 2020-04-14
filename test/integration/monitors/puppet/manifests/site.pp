@@ -49,7 +49,7 @@ class {
       'test2' => {
         script_source => 'puppet:///modules/files/testscript2.sh',
         files         => {
-          'testfile1' => 'puppet:///modules/files/testfile2',
+          'testfile2' => 'puppet:///modules/files/testfile2',
         },
         sudo          => {
           'testsudo2' => {
