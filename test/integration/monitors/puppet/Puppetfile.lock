@@ -1,0 +1,18 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    puppet-zypprepo (2.2.2)
+    puppetlabs-apt (4.5.1)
+      puppetlabs-stdlib (< 5.0.0, >= 4.16.0)
+    puppetlabs-stdlib (4.25.1)
+    puppetlabs-yumrepo_core (1.0.6)
+    saz-sudo (6.0.0)
+      puppetlabs-stdlib (< 7.0.0, >= 2.6.0)
+
+DEPENDENCIES
+  puppet-zypprepo (= 2.2.2)
+  puppetlabs-apt (= 4.5.1)
+  puppetlabs-stdlib (= 4.25.1)
+  puppetlabs-yumrepo_core (= 1.0.6)
+  saz-sudo (= 6.0.0)
+

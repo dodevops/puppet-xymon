@@ -1,0 +1,37 @@
+---
+driver:
+    name: "docker"
+    test_base_path: "test"
+    use_sudo: false # because of https://github.com/test-kitchen/kitchen-docker/issues/207
+    memory: "2G"
+
+provisioner:
+    name: "puppet_apply"
+    manifest: "site.pp"
+    puppet_debug: true
+    ignored_paths_from_root:
+        - "spec"
+        - "vendor"
+    ignore_spec_fixtures: true
+platforms:
+    -   name: "ubuntu-16.04"
+        provisioner:
+            name: "puppet_apply"
+            puppet_apt_repo: "http://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb"
+    -   name: "ubuntu-18.04"
+        provisioner:
+            name: "puppet_apply"
+            puppet_apt_repo: "http://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb"
+    -   name: "centos-7"
+        driver_config:
+            run_command: "/usr/sbin/init"
+            privileged: true
+        provisioner:
+            name: "puppet_apply"
+            require_puppet_collections: true
+            puppet_yum_collections_repo: "https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm"
+
+suites:
+    -   name: "default"
+    -   name: "monitors"
+

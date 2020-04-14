@@ -1,0 +1,6 @@
+<% | String $xymon_server, String $client_hostname | -%>
+# ** This file is managed by PUPPET **
+# Configure the Xymon client settings
+
+XYMONSERVERS="<%= $xymon_server %>"
+CLIENTHOSTNAME="<%= $client_hostname %>"

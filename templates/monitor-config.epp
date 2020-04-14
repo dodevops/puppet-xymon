@@ -1,0 +1,6 @@
+<% | String $name, String $script, String $interval, String $arguments | -%>
+[<%= $name %>]
+ENVFILE $XYMONCLIENTHOME/etc/xymonclient.cfg
+CMD <%= $script %> <%= $arguments %>
+LOGFILE $XYMONCLIENTLOGS/<%= $name %>.log
+INTERVAL <%= $interval %>
