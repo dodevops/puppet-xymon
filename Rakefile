@@ -84,3 +84,9 @@ task :integration_test do
   Rake::Task['kitchen:all'].invoke
 end
 
+task :lint_test do
+  %w[check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint].each do |test|
+    Rake::Task[test].invoke
+  end
+end
+
