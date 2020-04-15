@@ -29,32 +29,35 @@ define xymon::client::monitor (
   if (!$require_fqdn or $facts['fqdn'] == $require_fqdn) {
     if ($files) {
       $files.each |$value| {
-        file {
-          "${files_path}/${value[0]}":
+        ensure_resource(
+          'file',
+          "${files_path}/${value[0]}",
+          {
             owner  => $xymon_user,
             group  => $xymon_group,
             source => $value[1],
-            before => File["${clientlaunch_config}/${name}.sh"]
-        }
+            before => Service[$xymon_service]
+          }
+        )
       }
     }
 
     if ($sudo) {
-      create_resources(
+      ensure_resources(
         'sudo::conf',
         $sudo,
         {
-          before => File["${clientlaunch_config}/${name}.sh"]
+          before => Service[$xymon_service]
         }
       )
     }
 
     if ($packages) {
-      create_resources(
+      ensure_resources(
         'package',
         $packages,
         {
-          before => File["${clientlaunch_config}/${name}.sh"]
+          before => Service[$xymon_service]
         }
       )
     }

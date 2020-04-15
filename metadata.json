@@ -9,6 +9,10 @@
   "issues_url": "https://github.com/dodevops/puppet-xymon/issues",
   "dependencies": [
     {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=4.25.1 < 7.0.0"
+    },
+    {
       "name": "puppetlabs/apt",
       "version_requirement": ">=4.5.1 < 5.0.0"
     },
