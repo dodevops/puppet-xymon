@@ -44,7 +44,7 @@ class {
           'curl' => {
             ensure => 'installed'
           },
-          'mc' => {
+          'mc'   => {
             ensure => 'installed'
           }
         }
@@ -60,7 +60,7 @@ class {
           }
         },
         packages      => {
-          'curl' => {
+          'curl'    => {
             ensure => 'installed'
           },
           'sysstat' => {
