@@ -1,10 +1,12 @@
 {
   "name": "dodevops-xymon",
   "version": "0.1.0",
-  "author": "Dennis Ploeger",
-  "summary": "",
+  "author": "Dennis Ploeger <develop@dieploegers.de>",
+  "summary": "Puppet module for managing Xymon",
   "license": "MIT",
-  "source": "",
+  "source": "https://github.com/dodevops/puppet-xymon",
+  "project_page": "https://github.com/dodevops/puppet-xymon",
+  "issues_url": "https://github.com/dodevops/puppet-xymon/issues",
   "dependencies": [
     {
       "name": "puppetlabs/apt",
