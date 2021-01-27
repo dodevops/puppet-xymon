@@ -1,4 +1,4 @@
-# @summary Install the APT repository, key (optionally) and the pacakge
+# @summary Install the YUM repository, key (optionally) and the pacakge
 # @param repository_url URL of the repository that contains the xymon-client
 # @param package Package name
 # @param gpg_url URL of the GPG key for Debian repositories
