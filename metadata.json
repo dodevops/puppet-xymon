@@ -1,7 +1,7 @@
 {
   "name": "dodevops-xymon",
   "version": "0.2.0",
-  "author": "Dennis Ploeger <develop@dieploegers.de>",
+  "author": "dodevops",
   "summary": "Puppet module for managing Xymon",
   "license": "MIT",
   "source": "https://github.com/dodevops/puppet-xymon",
@@ -14,7 +14,7 @@
     },
     {
       "name": "puppetlabs/apt",
-      "version_requirement": ">=4.5.1 < 5.0.0"
+      "version_requirement": ">=4.5.1 < 8.0.0"
     },
     {
       "name": "saz/sudo",
@@ -22,7 +22,7 @@
     },
     {
       "name": "puppet/zypprepo",
-      "version_requirement": ">=2.2.2 < 3.0.0"
+      "version_requirement": ">=2.2.2 < 3.1.0"
     },
     {
       "name": "puppetlabs/yumrepo_core",

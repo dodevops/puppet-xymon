@@ -1,13 +1,14 @@
 # @summary Installs Xymon client, configures it and optionally sets up monitors
 # @see xymon::client::test
-# @param repository_url URL of the repository that contains the xymon-client
 # @param xymon_server The xymon server to use
+# @param manage_repository Manage the repository for package installation
 # @param config_file Path to the xymon-client configuration file
 # @param package Package name
 # @param service_name Service name
 # @param xymon_config_dir Directory where the xymon configs are stored
 # @param xymon_user The system user that is used by xymon
 # @param xymon_group The system group that is used by xymon
+# @param repository_url URL of the repository that contains the xymon-client
 # @param gpg_url URL of the GPG key
 # @param gpg_id Key id of the gpg key (Required by apt)
 # @param monitors A hash of tests to configure
@@ -46,14 +47,15 @@
 #            }
 #        }
 class xymon::client (
-  String $repository_url,
   String $xymon_server,
+  Boolean $manage_repository            = true,
   String $config_file                   = '/etc/default/xymon-client',
   String $package                       = 'xymon-client',
   String $service_name                  = 'xymon-client',
   String $xymon_config_dir              = '/etc/xymon',
   String $xymon_user                    = 'xymon',
   String $xymon_group                   = 'xymon',
+  Optional[String] $repository_url      = undef,
   Optional[String] $gpg_url             = undef,
   Optional[String] $gpg_id              = undef,
   Optional[Hash] $monitors              = undef,
@@ -77,40 +79,47 @@ class xymon::client (
     default => $client_name
   }
 
-  case $facts['os']['family'] {
-    'Debian': {
-      if ($gpg_url and !$gpg_id) {
-        fail('GPG-URL specified, but no GPG ID given')
-      }
+  if ($manage_repository) {
+    if (!$repository_url) {
+      fail('Repository URL for xymon-client required, when manage_repository is true')
+    }
 
-      class {
-        'xymon::repository::apt':
-          repository_url => $repository_url,
-          package        => $package,
-          gpg_url        => $gpg_url,
-          gpg_id         => $gpg_id,
+    case $facts['os']['family'] {
+      'Debian': {
+        if ($gpg_url and !$gpg_id) {
+          fail('GPG-URL specified, but no GPG ID given')
+        }
+
+        class {
+          'xymon::repository::apt':
+            repository_url => $repository_url,
+            package        => $package,
+            gpg_url        => $gpg_url,
+            gpg_id         => $gpg_id,
+        }
       }
-    }
-    'RedHat': {
-      class {
-        'xymon::repository::yum':
-          repository_url => $repository_url,
-          package        => $package,
-          gpg_url        => $gpg_url
+      'RedHat': {
+        class {
+          'xymon::repository::yum':
+            repository_url => $repository_url,
+            package        => $package,
+            gpg_url        => $gpg_url
+        }
       }
-    }
-    'Suse': {
-      class {
-        'xymon::repository::zypper':
-          repository_url => $repository_url,
-          package        => $package,
-          gpg_url        => $gpg_url
+      'Suse': {
+        class {
+          'xymon::repository::zypper':
+            repository_url => $repository_url,
+            package        => $package,
+            gpg_url        => $gpg_url
+        }
       }
-    }
-    default: {
-      notify { "The xymon::client profile doesn't support os family ${facts['os']['family']}": }
+      default: {
+        notify { "The xymon::client profile doesn't support os family ${facts['os']['family']}": }
+      }
     }
   }
+
 
   file {
     $config_file:

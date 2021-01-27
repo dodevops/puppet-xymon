@@ -2,4 +2,4 @@ forge "https://forgeapi.puppetlabs.com"
 
 mod 'saz/sudo', '4.1.0'
 mod 'puppetlabs/apt', '4.5.1'
-mod 'puppet/zypprepo', '2.2.2'
+mod 'puppet/zypprepo', '3.1.0'
