@@ -81,7 +81,7 @@ class xymon::client (
 
   if ($manage_repository) {
     if (!$repository_url) {
-      fail("Repository URL for xymon-client required, when manage_repository is true")
+      fail('Repository URL for xymon-client required, when manage_repository is true')
     }
 
     case $facts['os']['family'] {
