@@ -26,23 +26,40 @@
 #        gpg_url = 'https://my.repository.company.com/gpg',
 #        gpg_id = '6688A3782BBFE5A4',
 #        monitors = {
-#            'mycheck': {
-#              script_source: 'puppet:///my/script.sh'
-#              arguments: [
+#            'mycheck' => {
+#              script_source => 'puppet:///my/script.sh'
+#              arguments => [
 #                '--yellow=80',
 #                '--red=90',
 #                '--check-values=/etc/xymon/files/rootcheck.cfg
 #              ],
 #              sudo: {
-#                'rootcheck': {
-#                  content: 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
+#                'rootcheck' => {
+#                  content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
 #                }
 #              },
-#              packages: {
-#                'rootcheck': { ensure: 'latest' },
+#              packages => {
+#                'rootcheck' => { ensure => 'latest' },
 #              },
-#              files: {
-#                'rootcheck.cfg': 'puppet:///my/rootcheck.cfg',
+#              files => {
+#                'rootcheck.cfg' => {
+#                   source => 'puppet:///my/rootcheck.cfg',
+#                   mode => '0600',
+#                 },
+#                'mysql_connection.mycfg => {
+#                   template => 'my/mysql_connection/mysql_connection.cfg.epp,
+#                   mode => '0600',
+#                   vars => {
+#                     host => 'foo.bar.com',
+#                     user => 'fancydbuser',
+#                     password => 'fancypassword', # eyaml recommended here!
+#                   }
+#                }
+#              },
+#              logrotate => {
+#                path   => '/var/log/xymon/script.log',
+#                size   => '20M',
+#                rotate => 5,
 #              }
 #            }
 #        }
@@ -153,13 +170,13 @@ class xymon::client (
       'xymon::client::monitor',
       $monitors,
       {
-        clientlaunch_config => $_clientlaunch_config,
-        files_path          => $_files_path,
-        xymon_user          => $xymon_user,
-        xymon_group         => $xymon_group,
-        xymon_service       => $service_name,
-        require             => Package[$package],
-        notify              => Service[$service_name]
+        clientlaunch_config   => $_clientlaunch_config,
+        files_path            => $_files_path,
+        xymon_user            => $xymon_user,
+        xymon_group           => $xymon_group,
+        xymon_service         => $service_name,
+        require               => Package[$package],
+        notify                => Service[$service_name]
       }
     )
   }
