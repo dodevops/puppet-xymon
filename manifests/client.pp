@@ -137,6 +137,10 @@ class xymon::client (
     }
   }
 
+  package {
+    $package:
+      ensure  => 'latest',
+  }
 
   file {
     $config_file:
