@@ -17,6 +17,6 @@ class xymon::repository::yum (
       baseurl  => $repository_url,
       gpgkey   => $gpg_url,
       gpgcheck => $_gpgcheck,
-      before => Package[$package],
+      before   => Package[$package],
   }
 }
