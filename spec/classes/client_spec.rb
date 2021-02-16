@@ -69,10 +69,10 @@ describe 'xymon::client' do
                 arguments: ['--yellow=80', '--red=90'],
                 files: {
                   testfile1: {
-                      source: 'puppet://xymon/testfile1',
+                    source: 'puppet://xymon/testfile1',
                   },
                   testfile2: {
-                      source: 'puppet://xymon/testfile2',
+                    source: 'puppet://xymon/testfile2',
                   },
                 },
                 packages: {
