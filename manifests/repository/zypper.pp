@@ -15,10 +15,7 @@ class xymon::repository::zypper (
     'xymon':
       baseurl  => $repository_url,
       gpgkey   => $gpg_url,
-      gpgcheck => $_gpgcheck
-  }
-  -> package {
-    $package:
-      ensure => 'latest',
+      gpgcheck => $_gpgcheck,
+      before   => Package[$package],
   }
 }

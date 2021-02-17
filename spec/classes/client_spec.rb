@@ -68,8 +68,12 @@ describe 'xymon::client' do
                 script_source: 'puppet://xymon/testmonitor.sh',
                 arguments: ['--yellow=80', '--red=90'],
                 files: {
-                  testfile1: 'puppet://xymon/testfile1',
-                  testfile2: 'puppet://xymon/testfile2',
+                  testfile1: {
+                    source: 'puppet://xymon/testfile1',
+                  },
+                  testfile2: {
+                    source: 'puppet://xymon/testfile2',
+                  },
                 },
                 packages: {
                   sysstat: {

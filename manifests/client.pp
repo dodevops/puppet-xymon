@@ -12,6 +12,28 @@
 # @param gpg_url URL of the GPG key
 # @param gpg_id Key id of the gpg key (Required by apt)
 # @param monitors A hash of tests to configure
+#  @option monitors :script_source A Puppet file source to the script for the monitor
+#  @option monitors :clientlaunch_config Path to the Xymon clientlaunch path.
+#  @option monitors :files_path Path to the a path for additional files.
+#  @option monitors :xymon_user Xymon user.
+#  @option monitors :xymon_group Xymon group.
+#  @option monitors :xymon_service Xymon service name.
+#  @option monitors :interval A valid Xymon client interval string when to run the script
+#  @option monitors :arguments A list of command line arguments to start the script with
+#  @option monitors :require_fqdn Require that the agent has the specified FQDN for the monitor to be installed
+#  @option monitors :files A hash of filenames as key and sources as values to add to the xymon files
+#   @option files :source A Puppet file source for the additional file for the monitor
+#   @option files :template A Puppet template for the additional file for the monitor
+#   @option files :vars A hash of variables used in the template
+#   @option files :mode file mode of the additional file for the monitor
+#   @option files :owner owner of the additional file for the monitor
+#   @option files :group group of the additional file for the monitor
+#  @option monitors :sudo A sudo::conf hash with sudo definitions the xymon user should be allowed to use
+#  @option monitors :packages A puppet package hash with packages that are required for the monitor to work
+#  @option monitors :logrotate A hash containing definitions to configure logfile rotation
+#   @option logrotate :path path for the file to logrotate
+#   @option logrotate :size file size threshold when to rotate (human readable format accepted)
+#   @option logrotate :rotate how many times the log is rotated until it is deleted
 # @param client_name Name of the client (defaults to the FQDN)
 # @param clientlaunch_config Path ot the clientlaunch configuration directory
 #                            (defaults to $xymon_config_dir/clientlaunch.d)
@@ -26,23 +48,40 @@
 #        gpg_url = 'https://my.repository.company.com/gpg',
 #        gpg_id = '6688A3782BBFE5A4',
 #        monitors = {
-#            'mycheck': {
-#              script_source: 'puppet:///my/script.sh'
-#              arguments: [
+#            'mycheck' => {
+#              script_source => 'puppet:///my/script.sh'
+#              arguments => [
 #                '--yellow=80',
 #                '--red=90',
 #                '--check-values=/etc/xymon/files/rootcheck.cfg
 #              ],
 #              sudo: {
-#                'rootcheck': {
-#                  content: 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
+#                'rootcheck' => {
+#                  content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
 #                }
 #              },
-#              packages: {
-#                'rootcheck': { ensure: 'latest' },
+#              packages => {
+#                'rootcheck' => { ensure => 'latest' },
 #              },
-#              files: {
-#                'rootcheck.cfg': 'puppet:///my/rootcheck.cfg',
+#              files => {
+#                'rootcheck.cfg' => {
+#                   source => 'puppet:///my/rootcheck.cfg',
+#                   mode => '0600',
+#                 },
+#                'mysql_connection.mycfg => {
+#                   template => 'my/mysql_connection/mysql_connection.cfg.epp,
+#                   mode => '0600',
+#                   vars => {
+#                     host => 'foo.bar.com',
+#                     user => 'fancydbuser',
+#                     password => 'fancypassword', # eyaml recommended here!
+#                   }
+#                }
+#              },
+#              logrotate => {
+#                path   => '/var/log/xymon/script.log',
+#                size   => '20M',
+#                rotate => 5,
 #              }
 #            }
 #        }
@@ -120,6 +159,10 @@ class xymon::client (
     }
   }
 
+  package {
+    $package:
+      ensure  => 'latest',
+  }
 
   file {
     $config_file:

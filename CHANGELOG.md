@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [0.3.0pre2](https://github.com/dodevops/puppet-xymon/tree/0.3.0pre2) (2021-02-04)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/0.3.0pre...0.3.0pre2)
+
+## [0.3.0pre](https://github.com/dodevops/puppet-xymon/tree/0.3.0pre) (2021-02-04)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.2.0...0.3.0pre)
+
+### UNCATEGORIZED PRS; GO LABEL THEM
+
+- Improving repo management, updating zypprepo module and fixing other … [\#1](https://github.com/dodevops/puppet-xymon/pull/1) ([timdeluxe](https://github.com/timdeluxe))
+
 ## [v0.2.0](https://github.com/dodevops/puppet-xymon/tree/v0.2.0) (2020-04-15)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.1.0...v0.2.0)

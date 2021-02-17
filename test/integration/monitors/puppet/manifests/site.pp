@@ -33,7 +33,9 @@ class {
       'test'  => {
         script_source => 'puppet:///modules/files/testscript.sh',
         files         => {
-          'testfile1' => 'puppet:///modules/files/testfile1',
+          'testfile1' => {
+            source => 'puppet:///modules/files/testfile1',
+          }
         },
         sudo          => {
           'testsudo' => {
@@ -52,7 +54,9 @@ class {
       'test2' => {
         script_source => 'puppet:///modules/files/testscript2.sh',
         files         => {
-          'testfile2' => 'puppet:///modules/files/testfile2',
+          'testfile2' => {
+            source => 'puppet:///modules/files/testfile2',
+          }
         },
         sudo          => {
           'testsudo2' => {

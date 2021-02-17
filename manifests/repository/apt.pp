@@ -12,6 +12,7 @@ class xymon::repository::apt (
   apt::source {
     'xymon':
       location => $repository_url,
+      before   => Package[$package]
   }
 
   if ($gpg_url) {
@@ -20,11 +21,5 @@ class xymon::repository::apt (
         source => $gpg_url,
         before => Apt::Source['xymon']
     }
-  }
-
-  package {
-    $package:
-      ensure  => 'latest',
-      require => Apt::Source['xymon']
   }
 }
