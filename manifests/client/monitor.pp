@@ -10,9 +10,18 @@
 # @param arguments A list of command line arguments to start the script with
 # @param require_fqdn Require that the agent has the specified FQDN for the monitor to be installed
 # @param files A hash of filenames as key and sources as values to add to the xymon files
+#  @option files :source A Puppet file source for the additional file for the monitor
+#  @option files :template A Puppet template for the additional file for the monitor
+#  @option files :vars A hash of variables used in the template
+#  @option files :mode file mode of the additional file for the monitor
+#  @option files :owner owner of the additional file for the monitor
+#  @option files :group group of the additional file for the monitor
 # @param sudo A sudo::conf hash with sudo definitions the xymon user should be allowed to use
 # @param packages A puppet package hash with packages that are required for the monitor to work
 # @param logrotate A hash containing definitions to configure logfile rotation
+#  @option logrotate :path path for the file to logrotate
+#  @option logrotate :size file size threshold when to rotate (human readable format accepted)
+#  @option logrotate :rotate how many times the log is rotated until it is deleted
 define xymon::client::monitor (
   String $script_source,
   String $clientlaunch_config,
@@ -31,16 +40,16 @@ define xymon::client::monitor (
   if (!$require_fqdn or $facts['fqdn'] == $require_fqdn) {
     if ($files) {
       $files.each |String $key, Hash $value| {
-        $mode = !empty($value[mode]) ? {
-          true    => $value[mode],
+        $mode = empty($value[mode]) ? {
+          false   => $value[mode],
           default => '0644'
         }
-        $group = !empty($value[group]) ? {
-          true    => $value[group],
+        $group = empty($value[group]) ? {
+          false   => $value[group],
           default => 'xymon'
         }
-        $owner = !empty($value[owner]) ? {
-          true    => $value[owner],
+        $owner = empty($value[owner]) ? {
+          false   => $value[owner],
           default => 'xymon'
         }
         # Replace the '@' in the key with the script identifier to create the filename
@@ -57,7 +66,7 @@ define xymon::client::monitor (
               owner  => $owner,
               group  => $group,
               mode   => $mode,
-              source => $value[content],
+              source => $value[source],
               before => File["${clientlaunch_config}/${name}.sh"]
             }
           )
