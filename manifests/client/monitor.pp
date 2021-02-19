@@ -1,6 +1,5 @@
 # @summary Sets up a xymon monitor
 # @see https://forge.puppet.com/saz/sudo Sudo component package used
-# @param script_source A Puppet file source to the script for the monitor
 # @param clientlaunch_config Path to the Xymon clientlaunch path. Will be provided by xymon::client automatically
 # @param files_path Path to the a path for additional files. Will be provided by xymon::client automatically
 # @param xymon_user Xymon user. Will be provided by xymon::client automatically
@@ -9,9 +8,12 @@
 # @param interval A valid Xymon client interval string when to run the script
 # @param arguments A list of command line arguments to start the script with
 # @param require_fqdn Require that the agent has the specified FQDN for the monitor to be installed
+# @param script_source A Puppet file source to the script for the monitor (mutually exclusive with script_template)
+# @param script_template A Puppet file source to the script for the monitor (mutually exclusive with script_source)
+# @param script_vars A hash of variables for script_template (if used)
 # @param files A hash of filenames as key and sources as values to add to the xymon files
-#  @option files :source A Puppet file source for the additional file for the monitor
-#  @option files :template A Puppet template for the additional file for the monitor
+#  @option files :source A Puppet file source for the additional file for the monitor (mutually exclusive with template)
+#  @option files :template A Puppet template for the additional file for the monitor (mutually exclusive with source)
 #  @option files :vars A hash of variables used in the template
 #  @option files :mode file mode of the additional file for the monitor
 #  @option files :owner owner of the additional file for the monitor
@@ -23,7 +25,6 @@
 #  @option logrotate :size file size threshold when to rotate (human readable format accepted)
 #  @option logrotate :rotate how many times the log is rotated until it is deleted
 define xymon::client::monitor (
-  String $script_source,
   String $clientlaunch_config,
   String $files_path,
   String $xymon_user,
@@ -32,6 +33,9 @@ define xymon::client::monitor (
   String $interval                        = '5m',
   Array[String] $arguments                = [],
   Optional[String] $require_fqdn          = undef,
+  Optional[String] $script_source         = undef,
+  Optional[String] $script_template       = undef,
+  Optional[Hash] $script_vars             = undef,
   Optional[Hash] $files                   = undef,
   Optional[Hash] $sudo                    = undef,
   Optional[Hash] $packages                = undef,
@@ -109,14 +113,29 @@ define xymon::client::monitor (
       )
     }
 
-    file {
-      "${clientlaunch_config}/${name}.sh":
-        source => $script_source,
-        owner  => $xymon_user,
-        group  => $xymon_group,
-        mode   => '0755',
+    if ($script_source) {
+      file {
+        "${clientlaunch_config}/${name}.sh":
+          source => $script_source,
+          owner  => $xymon_user,
+          group  => $xymon_group,
+          mode   => '0755',
+          before => File["${clientlaunch_config}/${name}.cfg"],
+      }
+    } elsif ($script_template) {
+      file {
+        "${clientlaunch_config}/${name}.sh":
+          content => epp($script_template, $script_vars),
+          owner   => $xymon_user,
+          group   => $xymon_group,
+          mode    => '0755',
+          before  => File["${clientlaunch_config}/${name}.cfg"],
+      }
+    } else {
+      fail('please set either script_source or script_template')
     }
-    -> file {
+
+    file {
       "${clientlaunch_config}/${name}.cfg":
         content => epp(
           'xymon/monitor-config.epp',
