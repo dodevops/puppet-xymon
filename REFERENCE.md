@@ -36,23 +36,40 @@ class {
     gpg_url = 'https://my.repository.company.com/gpg',
     gpg_id = '6688A3782BBFE5A4',
     monitors = {
-        'mycheck': {
-          script_source: 'puppet:///my/script.sh'
-          arguments: [
+        'mycheck' => {
+          script_source => 'puppet:///my/script.sh'
+          arguments => [
             '--yellow=80',
             '--red=90',
             '--check-values=/etc/xymon/files/rootcheck.cfg
           ],
           sudo: {
-            'rootcheck': {
-              content: 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
+            'rootcheck' => {
+              content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
             }
           },
-          packages: {
-            'rootcheck': { ensure: 'latest' },
+          packages => {
+            'rootcheck' => { ensure => 'latest' },
           },
-          files: {
-            'rootcheck.cfg': 'puppet:///my/rootcheck.cfg',
+          files => {
+            'rootcheck.cfg' => {
+               source => 'puppet:///my/rootcheck.cfg',
+               mode => '0600',
+             },
+            'mysql_connection.mycfg => {
+               template => 'my/mysql_connection/mysql_connection.cfg.epp,
+               mode => '0600',
+               vars => {
+                 host => 'foo.bar.com',
+                 user => 'fancydbuser',
+                 password => 'fancypassword', # eyaml recommended here!
+               }
+            }
+          },
+          logrotate => {
+            path   => '/var/log/xymon/script.log',
+            size   => '20M',
+            rotate => 5,
           }
         }
     }
@@ -169,6 +186,28 @@ Default value: ``undef``
 Data type: `Optional[Hash]`
 
 A hash of tests to configure
+@option monitors :script_source A Puppet file source to the script for the monitor
+@option monitors :clientlaunch_config Path to the Xymon clientlaunch path.
+@option monitors :files_path Path to the a path for additional files.
+@option monitors :xymon_user Xymon user.
+@option monitors :xymon_group Xymon group.
+@option monitors :xymon_service Xymon service name.
+@option monitors :interval A valid Xymon client interval string when to run the script
+@option monitors :arguments A list of command line arguments to start the script with
+@option monitors :require_fqdn Require that the agent has the specified FQDN for the monitor to be installed
+@option monitors :files A hash of filenames as key and sources as values to add to the xymon files
+ @option files :source A Puppet file source for the additional file for the monitor
+ @option files :template A Puppet template for the additional file for the monitor
+ @option files :vars A hash of variables used in the template
+ @option files :mode file mode of the additional file for the monitor
+ @option files :owner owner of the additional file for the monitor
+ @option files :group group of the additional file for the monitor
+@option monitors :sudo A sudo::conf hash with sudo definitions the xymon user should be allowed to use
+@option monitors :packages A puppet package hash with packages that are required for the monitor to work
+@option monitors :logrotate A hash containing definitions to configure logfile rotation
+ @option logrotate :path path for the file to logrotate
+ @option logrotate :size file size threshold when to rotate (human readable format accepted)
+ @option logrotate :rotate how many times the log is rotated until it is deleted
 
 Default value: ``undef``
 
@@ -317,7 +356,6 @@ Sets up a xymon monitor
 
 The following parameters are available in the `xymon::client::monitor` defined type:
 
-* [`script_source`](#script_source)
 * [`clientlaunch_config`](#clientlaunch_config)
 * [`files_path`](#files_path)
 * [`xymon_user`](#xymon_user)
@@ -326,15 +364,13 @@ The following parameters are available in the `xymon::client::monitor` defined t
 * [`interval`](#interval)
 * [`arguments`](#arguments)
 * [`require_fqdn`](#require_fqdn)
+* [`script_source`](#script_source)
+* [`script_template`](#script_template)
+* [`script_vars`](#script_vars)
 * [`files`](#files)
 * [`sudo`](#sudo)
 * [`packages`](#packages)
-
-##### <a name="script_source"></a>`script_source`
-
-Data type: `String`
-
-A Puppet file source to the script for the monitor
+* [`logrotate`](#logrotate)
 
 ##### <a name="clientlaunch_config"></a>`clientlaunch_config`
 
@@ -390,11 +426,41 @@ Require that the agent has the specified FQDN for the monitor to be installed
 
 Default value: ``undef``
 
+##### <a name="script_source"></a>`script_source`
+
+Data type: `Optional[String]`
+
+A Puppet file source to the script for the monitor (mutually exclusive with script_template)
+
+Default value: ``undef``
+
+##### <a name="script_template"></a>`script_template`
+
+Data type: `Optional[String]`
+
+A Puppet file source to the script for the monitor (mutually exclusive with script_source)
+
+Default value: ``undef``
+
+##### <a name="script_vars"></a>`script_vars`
+
+Data type: `Optional[Hash]`
+
+A hash of variables for script_template (if used)
+
+Default value: ``undef``
+
 ##### <a name="files"></a>`files`
 
 Data type: `Optional[Hash]`
 
 A hash of filenames as key and sources as values to add to the xymon files
+@option files :source A Puppet file source for the additional file for the monitor (mutually exclusive with template)
+@option files :template A Puppet template for the additional file for the monitor (mutually exclusive with source)
+@option files :vars A hash of variables used in the template
+@option files :mode file mode of the additional file for the monitor
+@option files :owner owner of the additional file for the monitor
+@option files :group group of the additional file for the monitor
 
 Default value: ``undef``
 
@@ -411,6 +477,17 @@ Default value: ``undef``
 Data type: `Optional[Hash]`
 
 A puppet package hash with packages that are required for the monitor to work
+
+Default value: ``undef``
+
+##### <a name="logrotate"></a>`logrotate`
+
+Data type: `Optional[Hash]`
+
+A hash containing definitions to configure logfile rotation
+@option logrotate :path path for the file to logrotate
+@option logrotate :size file size threshold when to rotate (human readable format accepted)
+@option logrotate :rotate how many times the log is rotated until it is deleted
 
 Default value: ``undef``
 

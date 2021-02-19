@@ -11,4 +11,4 @@ Current features include:
 
 ## Usage
 
-See the reference page for details on the available classes. 
+See the REFERENCE page for details on the available classes. 
