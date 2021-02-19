@@ -1,59 +1,58 @@
----
 dist: xenial
 language: ruby
 cache: bundler
 before_install:
-  - bundle -v
-  - rm -f Gemfile.lock
-  - gem update --system $RUBYGEMS_VERSION
-  - gem --version
-  - bundle -v
+- bundle -v
+- rm -f Gemfile.lock
+- gem update --system $RUBYGEMS_VERSION
+- gem --version
+- bundle -v
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 script:
-  - 'bundle exec rake $CHECK'
-bundler_args: --without system_tests
+- bundle exec rake $CHECK
+bundler_args: "--without system_tests"
 rvm:
-  - 2.5.3
+- 2.5.3
 stages:
-  - static
-  - spec
-  - acceptance
-  -
-    if: tag =~ ^v\d
-    name: deploy
+- static
+- spec
+- acceptance
+- if: tag =~ ^v\d
+  name: deploy
 matrix:
   fast_finish: true
   include:
-    -
-      env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
-      stage: static
-    -
-      env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
-      rvm: 2.4.5
-      stage: spec
-    -
-      env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
-      rvm: 2.5.3
-      stage: spec
-    -
-      env: DEPLOY_TO_FORGE=yes
-      stage: deploy
-    -
-      env: PUPPET_GEM_VERSION="~> 6.0" CHECK=integration_test
-      rvm: 2.5.3
-      script: travis_wait 40 bundle exec rake $CHECK
-      stage: spec
+  - env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file
+      rubocop syntax lint metadata_lint"
+    stage: static
+  - env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
+    rvm: 2.4.5
+    stage: spec
+  - env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
+    rvm: 2.5.3
+    stage: spec
+  - env: DEPLOY_TO_FORGE=yes
+    stage: deploy
+  - env: PUPPET_GEM_VERSION="~> 6.0" CHECK=integration_test
+    rvm: 2.5.3
+    script: travis_wait 40 bundle exec rake $CHECK
+    stage: spec
 branches:
   only:
-    - master
-    - /^v\d/
+  - master
+  - "/^v\\d/"
 notifications:
   email: false
 deploy:
   provider: puppetforge
   user: dodevops
   password:
-    secure: "oOMnNF5/e+WUnWy9G3opVbK+1fm1FaR0/vQ+2EAgbDHtcX+Kkh0yOdsVZhfD9SN1bCI8dktYNGsMdRm8GruW3O+lZ2bQFbGNbf/du8tIWAvAYe0b9892ertHu+ZMjoyAg0LdqDyFoZWKQgpCKco26t2dZ4JDvCpzt5N2bsdrfFyGpX2uBA1UgaH+iscUvfJPObi2f1EkzyW9avQcRbv4ej1LO9fhOCmflBLXmj5EO+ZKArnAop5mYsmdVMIuF2R1KZ7vQE0N3kva0cMpfrgBI2dmg2uJV/QRj7lD+7a40NklqyMEy8Op1IkNHLKV8eL6cfi8kyRoJSRYv6PjdMm6ij2KGfb0DJpytei1O7m4yMpXpkrm6wdiai2sMhHu0DK/hZJr3xBm7Y2RlMz38mFS2ytQLfe5ZlMK8lMisyxEj0ljT8cEFDHqaUnBqCMbYWwx19LssHtLN3WDT4vDpctiiUH6mO4j3MWjlS9iKZ57Yz5qVnjo2JplBV1X6FSCkSIOBWQxXWpnQCurh3oZUWKSIm8XE+QLiaoQr1TTGwe0Epxgml1FyoBq1tGSiXJEkaF4+cT8q2ICjxdSzVcBFkJy0GmlAOBK0IsLmnlxwcEBs4aVCgtJi7Q1/eV74iNsuHiXNOdzQ20Kh8x0ZTvfM7vYr7cOgQ/hTW0pbA09N6HXFzY="
+    secure: oOMnNF5/e+WUnWy9G3opVbK+1fm1FaR0/vQ+2EAgbDHtcX+Kkh0yOdsVZhfD9SN1bCI8dktYNGsMdRm8GruW3O+lZ2bQFbGNbf/du8tIWAvAYe0b9892ertHu+ZMjoyAg0LdqDyFoZWKQgpCKco26t2dZ4JDvCpzt5N2bsdrfFyGpX2uBA1UgaH+iscUvfJPObi2f1EkzyW9avQcRbv4ej1LO9fhOCmflBLXmj5EO+ZKArnAop5mYsmdVMIuF2R1KZ7vQE0N3kva0cMpfrgBI2dmg2uJV/QRj7lD+7a40NklqyMEy8Op1IkNHLKV8eL6cfi8kyRoJSRYv6PjdMm6ij2KGfb0DJpytei1O7m4yMpXpkrm6wdiai2sMhHu0DK/hZJr3xBm7Y2RlMz38mFS2ytQLfe5ZlMK8lMisyxEj0ljT8cEFDHqaUnBqCMbYWwx19LssHtLN3WDT4vDpctiiUH6mO4j3MWjlS9iKZ57Yz5qVnjo2JplBV1X6FSCkSIOBWQxXWpnQCurh3oZUWKSIm8XE+QLiaoQr1TTGwe0Epxgml1FyoBq1tGSiXJEkaF4+cT8q2ICjxdSzVcBFkJy0GmlAOBK0IsLmnlxwcEBs4aVCgtJi7Q1/eV74iNsuHiXNOdzQ20Kh8x0ZTvfM7vYr7cOgQ/hTW0pbA09N6HXFzY=
   on:
     tags: true
     all_branches: true
     condition: "$DEPLOY_TO_FORGE = yes"
+env:
+  global:
+    DOCKER_USERNAME=dodevopsdocker
+    secure: fH/ce9WPbfSNA/2w2IGSLB1r9SituIHXGHS0iFhFZlfJUfvfrW5PLg/AnZawC2+5cK6VR5IKeIvUhwidzC4X/3mmr9oWi56ec7r8XMy1sz3cmLVvUOwbsAoI2YKHvr5Nd3gtdaD4YaAEy6OL0wTpZt7gkzfxIRwncPDz+EwVtaViT1fhxFwa2Au7ukpWSiSLGin1u4RHEwYoDgUE50+4RTy0fWnzuATakLXBXfB4j4Gi1Trusx1rAjJVJMQw+v61YayrPz348LVmla76Enx46lM1n6MLepv5IYjBfWflQDfNLaPam8GiYkSsI/u68W0Zyz8N9mWnTROFeM/TsH9dfrGs0ohznyKCMvFCamM7lAXJENNHEGuU6iPK/FxBvGh+6hxmktYdKw9h0slH+e2SIeQLGvQb8BgFWPRg5vGmJVeVzYtLDVD2pkv43+ZwQ1fiuLwED3E6Px/ImDnJsW41qZwmCewua3wbjjpHsvDg8g9JgXwIvt6C3EJ/v/aXzUtKsEMC2hgG2D3f0jyfwdqosOhIK56BFmE55e9wLt2dR7EW+oprDjA3p7erFpkKfjwxycJEMwqYQgHvDd0TQT2TSPzhummiUoB/YZCtjcBBMCc6BPVpyt3R87n5QJnF0th7uI6dTmE6mo9TwkzyDhDWdG+PyiHEbQMWz3Yh2BkmOiU=
