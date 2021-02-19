@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v0.4.0](https://github.com/dodevops/puppet-xymon/tree/v0.4.0) (2021-02-19)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.0...v0.4.0)
+
+### Added
+
+- Adding option to use a template as check script source [\#3](https://github.com/dodevops/puppet-xymon/pull/3) ([timdeluxe](https://github.com/timdeluxe))
+
+## [v0.4.0](https://github.com/dodevops/puppet-xymon/tree/v0.4.0) (2021-02-19)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.3.0...v0.4.0)
+
+## [v0.3.0](https://github.com/dodevops/puppet-xymon/tree/v0.3.0) (2021-02-17)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/0.3.0pre2...v0.3.0)
+
+### Added
+
+- Improvement of additional monitor files management improvement, refactoring package installation and fixing zypprepo dependency [\#2](https://github.com/dodevops/puppet-xymon/pull/2) ([timdeluxe](https://github.com/timdeluxe))
+
 ## [0.3.0pre2](https://github.com/dodevops/puppet-xymon/tree/0.3.0pre2) (2021-02-04)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/0.3.0pre...0.3.0pre2)
@@ -10,7 +30,7 @@ All notable changes to this project will be documented in this file. The format 
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.2.0...0.3.0pre)
 
-### UNCATEGORIZED PRS; GO LABEL THEM
+### Added
 
 - Improving repo management, updating zypprepo module and fixing other … [\#1](https://github.com/dodevops/puppet-xymon/pull/1) ([timdeluxe](https://github.com/timdeluxe))
 
