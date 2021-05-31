@@ -2,9 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v0.4.0](https://github.com/dodevops/puppet-xymon/tree/v0.4.0) (2021-02-19)
+## [v0.4.2](https://github.com/dodevops/puppet-xymon/tree/v0.4.2) (2021-05-31)
 
-[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.0...v0.4.0)
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.1...v0.4.2)
+
+### Added
+
+- Raising zypprepo dependency version [\#4](https://github.com/dodevops/puppet-xymon/pull/4) ([timdeluxe](https://github.com/timdeluxe))
+
+## [v0.4.1](https://github.com/dodevops/puppet-xymon/tree/v0.4.1) (2021-02-19)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.0...v0.4.1)
 
 ### Added
 
