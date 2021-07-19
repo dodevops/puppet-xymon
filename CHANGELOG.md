@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v0.4.4](https://github.com/dodevops/puppet-xymon/tree/v0.4.4) (2021-07-19)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.3...v0.4.4)
+
+### Fixed
+
+- Fixing package installation duplicate definiton by using ensure\_packages [\#5](https://github.com/dodevops/puppet-xymon/pull/5) ([timdeluxe](https://github.com/timdeluxe))
+
 ## [v0.4.3](https://github.com/dodevops/puppet-xymon/tree/v0.4.3) (2021-05-31)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.1...v0.4.3)
