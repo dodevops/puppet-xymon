@@ -104,8 +104,7 @@ define xymon::client::monitor (
     }
 
     if ($packages) {
-      ensure_resources(
-        'package',
+      ensure_packages(
         $packages,
         {
           before => Service[$xymon_service]
