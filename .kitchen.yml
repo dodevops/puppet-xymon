@@ -4,6 +4,8 @@ driver:
     test_base_path: "test"
     use_sudo: false # because of https://github.com/test-kitchen/kitchen-docker/issues/207
     memory: "2G"
+    provision_command: |
+        touch /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/10_testsudo3
 
 provisioner:
     name: "puppet_apply"
@@ -13,6 +15,7 @@ provisioner:
         - "spec"
         - "vendor"
     ignore_spec_fixtures: true
+
 platforms:
     -   name: "ubuntu-16.04"
         provisioner:

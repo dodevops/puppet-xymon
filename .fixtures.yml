@@ -16,5 +16,8 @@ fixtures:
             repo: "puppetlabs/stdlib"
             ref: "4.25.1"
         yumrepo_core:
-            repo: "puppetlabs-yumrepo_core"
+            repo: "puppetlabs/yumrepo_core"
             ref: "1.0.6"
+        logrotate:
+            repo: "puppet/logrotate"
+            ref: "5.0.0"
