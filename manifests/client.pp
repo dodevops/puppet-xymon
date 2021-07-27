@@ -1,44 +1,94 @@
-# @summary Installs Xymon client, configures it and optionally sets up monitors
-# @see xymon::client::test
-# @param xymon_server The xymon server to use
-# @param manage_repository Manage the repository for package installation
-# @param config_file Path to the xymon-client configuration file
-# @param package Package name
-# @param service_name Service name
-# @param xymon_config_dir Directory where the xymon configs are stored
-# @param xymon_user The system user that is used by xymon
-# @param xymon_group The system group that is used by xymon
-# @param repository_url URL of the repository that contains the xymon-client
-# @param gpg_url URL of the GPG key
-# @param gpg_id Key id of the gpg key (Required by apt)
-# @param monitors A hash of tests to configure
-#  @option monitors :script_source A Puppet file source to the script for the monitor
-#  @option monitors :clientlaunch_config Path to the Xymon clientlaunch path.
-#  @option monitors :files_path Path to the a path for additional files.
-#  @option monitors :xymon_user Xymon user.
-#  @option monitors :xymon_group Xymon group.
-#  @option monitors :xymon_service Xymon service name.
-#  @option monitors :interval A valid Xymon client interval string when to run the script
-#  @option monitors :arguments A list of command line arguments to start the script with
-#  @option monitors :require_fqdn Require that the agent has the specified FQDN for the monitor to be installed
-#  @option monitors :files A hash of filenames as key and sources as values to add to the xymon files
-#   @option files :source A Puppet file source for the additional file for the monitor
-#   @option files :template A Puppet template for the additional file for the monitor
-#   @option files :vars A hash of variables used in the template
-#   @option files :mode file mode of the additional file for the monitor
-#   @option files :owner owner of the additional file for the monitor
-#   @option files :group group of the additional file for the monitor
-#  @option monitors :sudo A sudo::conf hash with sudo definitions the xymon user should be allowed to use
-#  @option monitors :packages A puppet package hash with packages that are required for the monitor to work
-#  @option monitors :logrotate A hash containing definitions to configure logfile rotation
-#   @option logrotate :path path for the file to logrotate
-#   @option logrotate :size file size threshold when to rotate (human readable format accepted)
-#   @option logrotate :rotate how many times the log is rotated until it is deleted
-# @param client_name Name of the client (defaults to the FQDN)
-# @param clientlaunch_config Path ot the clientlaunch configuration directory
-#                            (defaults to $xymon_config_dir/clientlaunch.d)
-# @param files_path A path where to store additional files required by the monitors (defaults to
-#                   ($xymon_config_dir/files)
+# @summary
+#   Installs Xymon client, configures it and optionally sets up monitors
+#
+# @param xymon_server
+#   The xymon server to use
+#
+# @param manage_repository
+#   Manage the repository for package installation
+#
+# @param config_file
+#   Path to the xymon-client configuration file
+#
+# @param package
+#   Package name
+#
+# @param service_name
+#   Service name
+#
+# @param xymon_config_dir
+#   Directory where the xymon configs are stored
+#
+# @param xymon_user
+#   The system user that is used by xymon
+#
+# @param xymon_group
+#   The system group that is used by xymon
+#
+# @param repository_url
+#   URL of the repository that contains the xymon-client
+#
+# @param gpg_url
+#   URL of the GPG key
+#
+# @param gpg_id
+#   Key id of the gpg key (Required by apt)
+#
+# @param monitors
+#   A hash of tests to configure
+# @option monitors :script_source
+#   A Puppet file source to the script for the monitor
+# @option monitors :clientlaunch_config
+#   Path to the Xymon clientlaunch path.
+# @option monitors :files_path
+#   Path to the a path for additional files.
+# @option monitors :xymon_user
+#   Xymon user.
+# @option monitors :xymon_group
+#   Xymon group.
+# @option monitors :xymon_service
+#   Xymon service name.
+# @option monitors :interval
+#   A valid Xymon client interval string when to run the script
+# @option monitors :arguments
+#   A list of command line arguments to start the script with
+# @option monitors :require_fqdn
+#   Require that the agent has the specified FQDN for the monitor to be installed
+# @option monitors :files
+#   A hash of filenames as key and sources as values to add to the xymon files
+# @option files :source
+#   A Puppet file source for the additional file for the monitor
+# @option files :template
+#   A Puppet template for the additional file for the monitor
+# @option files :vars
+#   A hash of variables used in the template
+# @option files :mode
+#   file mode of the additional file for the monitor
+# @option files :owner
+#   owner of the additional file for the monitor
+# @option files :group
+#   group of the additional file for the monitor
+# @option monitors :sudo
+#   A sudo::conf hash with sudo definitions the xymon user should be allowed to use
+# @option monitors :packages
+#   A puppet package hash with packages that are required for the monitor to work
+# @option monitors :logrotate
+#   A hash containing definitions to configure logfile rotation
+# @option logrotate :path
+#   path for the file to logrotate
+# @option logrotate :size
+#   file size threshold when to rotate (human readable format accepted)
+# @option logrotate :rotate
+#   how many times the log is rotated until it is deleted
+#
+# @param client_name
+#   Name of the client (defaults to the FQDN)
+#
+# @param clientlaunch_config
+#   Path ot the clientlaunch configuration directory (defaults to $xymon_config_dir/clientlaunch.d)
+#
+# @param files_path
+#   A path where to store additional files required by the monitors (defaults to $xymon_config_dir/files)
 #
 # @example
 #    class {
@@ -103,12 +153,12 @@ class xymon::client (
   Optional[String] $files_path          = undef,
 ) {
 
-  $_clientlaunch_config = $clientlaunch_config ? {
+  $actual_clientlaunch_config = $clientlaunch_config ? {
     undef   => "${xymon_config_dir}/clientlaunch.d",
     default => $clientlaunch_config
   }
 
-  $_files_path = $files_path ? {
+  $actual_files_path = $files_path ? {
     undef   => "${xymon_config_dir}/files",
     default => $files_path
   }
@@ -177,12 +227,12 @@ class xymon::client (
   }
 
   -> file {
-    $_files_path:
+    $actual_files_path:
       ensure => 'directory',
   }
 
   -> file {
-    $_clientlaunch_config:
+    $actual_clientlaunch_config:
       ensure => 'directory',
   }
 
@@ -196,14 +246,10 @@ class xymon::client (
       'xymon::client::monitor',
       $monitors,
       {
-        clientlaunch_config => $_clientlaunch_config,
-        files_path          => $_files_path,
-        xymon_user          => $xymon_user,
-        xymon_group         => $xymon_group,
-        xymon_service       => $service_name,
         require             => Package[$package],
-        notify              => Service[$service_name]
       }
     )
   }
+
+  Package[$package] -> Xymon::Client::Monitor<||>
 }

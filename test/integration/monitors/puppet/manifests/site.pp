@@ -71,6 +71,20 @@ class {
             ensure => 'installed'
           }
         }
+      },
+      'test3' => {
+        ensure        => 'absent',
+        script_source => 'puppet:///modules/files/testscript2.sh',
+        files         => {
+          'testfile3' => {
+            source => 'puppet:///modules/files/testfile2',
+          }
+        },
+        sudo          => {
+          'testsudo3' => {
+            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck3'
+          }
+        },
       }
     }
 }
