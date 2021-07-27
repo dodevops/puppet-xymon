@@ -21,9 +21,6 @@
 
 Installs Xymon client, configures it and optionally sets up monitors
 
-* **See also**
-  * xymon::client::test
-
 #### Examples
 
 ##### 
@@ -186,28 +183,22 @@ Default value: ``undef``
 Data type: `Optional[Hash]`
 
 A hash of tests to configure
-@option monitors :script_source A Puppet file source to the script for the monitor
-@option monitors :clientlaunch_config Path to the Xymon clientlaunch path.
-@option monitors :files_path Path to the a path for additional files.
-@option monitors :xymon_user Xymon user.
-@option monitors :xymon_group Xymon group.
-@option monitors :xymon_service Xymon service name.
-@option monitors :interval A valid Xymon client interval string when to run the script
-@option monitors :arguments A list of command line arguments to start the script with
-@option monitors :require_fqdn Require that the agent has the specified FQDN for the monitor to be installed
-@option monitors :files A hash of filenames as key and sources as values to add to the xymon files
- @option files :source A Puppet file source for the additional file for the monitor
- @option files :template A Puppet template for the additional file for the monitor
- @option files :vars A hash of variables used in the template
- @option files :mode file mode of the additional file for the monitor
- @option files :owner owner of the additional file for the monitor
- @option files :group group of the additional file for the monitor
-@option monitors :sudo A sudo::conf hash with sudo definitions the xymon user should be allowed to use
-@option monitors :packages A puppet package hash with packages that are required for the monitor to work
-@option monitors :logrotate A hash containing definitions to configure logfile rotation
- @option logrotate :path path for the file to logrotate
- @option logrotate :size file size threshold when to rotate (human readable format accepted)
- @option logrotate :rotate how many times the log is rotated until it is deleted
+
+Options:
+
+* **:script_source** `String`: A Puppet file source to the script for the monitor
+* **:clientlaunch_config** `String`: Path to the Xymon clientlaunch path.
+* **:files_path** `String`: Path to the a path for additional files.
+* **:xymon_user** `String`: Xymon user.
+* **:xymon_group** `String`: Xymon group.
+* **:xymon_service** `String`: Xymon service name.
+* **:interval** `String`: A valid Xymon client interval string when to run the script
+* **:arguments** `Array[String]`: A list of command line arguments to start the script with
+* **:require_fqdn** `String`: Require that the agent has the specified FQDN for the monitor to be installed
+* **:files** `Hash`: A hash of filenames as key and sources as values to add to the xymon files
+* **:sudo** `Hash`: A sudo::conf hash with sudo definitions the xymon user should be allowed to use
+* **:packages** `Hash`: A puppet package hash with packages that are required for the monitor to work
+* **:logrotate** `Hash`: A hash containing definitions to configure logfile rotation
 
 Default value: ``undef``
 
@@ -223,8 +214,7 @@ Default value: ``undef``
 
 Data type: `Optional[String]`
 
-Path ot the clientlaunch configuration directory
-(defaults to $xymon_config_dir/clientlaunch.d)
+Path ot the clientlaunch configuration directory (defaults to $xymon_config_dir/clientlaunch.d)
 
 Default value: ``undef``
 
@@ -232,8 +222,7 @@ Default value: ``undef``
 
 Data type: `Optional[String]`
 
-A path where to store additional files required by the monitors (defaults to
-($xymon_config_dir/files)
+A path where to store additional files required by the monitors (defaults to $xymon_config_dir/files)
 
 Default value: ``undef``
 
@@ -351,6 +340,8 @@ Sets up a xymon monitor
 * **See also**
   * https://forge.puppet.com/saz/sudo
     * Sudo component package used
+  * https://forge.puppet.com/modules/puppet/logrotate
+    * Logrotate component package used
 
 #### Parameters
 
@@ -361,6 +352,7 @@ The following parameters are available in the `xymon::client::monitor` defined t
 * [`xymon_user`](#xymon_user)
 * [`xymon_group`](#xymon_group)
 * [`xymon_service`](#xymon_service)
+* [`ensure`](#ensure)
 * [`interval`](#interval)
 * [`arguments`](#arguments)
 * [`require_fqdn`](#require_fqdn)
@@ -371,6 +363,7 @@ The following parameters are available in the `xymon::client::monitor` defined t
 * [`sudo`](#sudo)
 * [`packages`](#packages)
 * [`logrotate`](#logrotate)
+* [`ensure_packages`](#ensure_packages)
 
 ##### <a name="clientlaunch_config"></a>`clientlaunch_config`
 
@@ -378,11 +371,15 @@ Data type: `String`
 
 Path to the Xymon clientlaunch path. Will be provided by xymon::client automatically
 
+Default value: `$xymon::client::actual_clientlaunch_config`
+
 ##### <a name="files_path"></a>`files_path`
 
 Data type: `String`
 
 Path to the a path for additional files. Will be provided by xymon::client automatically
+
+Default value: `$xymon::client::actual_files_path`
 
 ##### <a name="xymon_user"></a>`xymon_user`
 
@@ -390,17 +387,31 @@ Data type: `String`
 
 Xymon user. Will be provided by xymon::client automatically
 
+Default value: `$xymon::client::xymon_user`
+
 ##### <a name="xymon_group"></a>`xymon_group`
 
 Data type: `String`
 
 Xymon group. Will be provided by xymon::client automatically
 
+Default value: `$xymon::client::xymon_group`
+
 ##### <a name="xymon_service"></a>`xymon_service`
 
 Data type: `String`
 
 Xymon service name. Will be provided by xymon::client automatically
+
+Default value: `$xymon::client::service_name`
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['present', 'absent']`
+
+Ensure if monitor is either present or absent
+
+Default value: `'present'`
 
 ##### <a name="interval"></a>`interval`
 
@@ -455,12 +466,15 @@ Default value: ``undef``
 Data type: `Optional[Hash]`
 
 A hash of filenames as key and sources as values to add to the xymon files
-@option files :source A Puppet file source for the additional file for the monitor (mutually exclusive with template)
-@option files :template A Puppet template for the additional file for the monitor (mutually exclusive with source)
-@option files :vars A hash of variables used in the template
-@option files :mode file mode of the additional file for the monitor
-@option files :owner owner of the additional file for the monitor
-@option files :group group of the additional file for the monitor
+
+Options:
+
+* **:source** `String`: A Puppet file source for the additional file for the monitor (mutually exclusive with template)
+* **:template** `String`: A Puppet template for the additional file for the monitor (mutually exclusive with source)
+* **:vars** `Hash`: A hash of variables used in the template
+* **:mode** `String`: file mode of the additional file for the monitor
+* **:owner** `String`: owner of the additional file for the monitor
+* **:group** `String`: group of the additional file for the monitor
 
 Default value: ``undef``
 
@@ -485,9 +499,21 @@ Default value: ``undef``
 Data type: `Optional[Hash]`
 
 A hash containing definitions to configure logfile rotation
-@option logrotate :path path for the file to logrotate
-@option logrotate :size file size threshold when to rotate (human readable format accepted)
-@option logrotate :rotate how many times the log is rotated until it is deleted
+
+Options:
+
+* **:path** `String`: path for the file to logrotate
+* **:size** `String`: file size threshold when to rotate (human readable format accepted)
+* **:rotate** `Integer`: how many times the log is rotated until it is deleted
+
+Default value: ``undef``
+
+##### <a name="ensure_packages"></a>`ensure_packages`
+
+Data type: `Optional[Enum['present', 'absent']]`
+
+Ensure that installed packages from the packages repository are present or absent (defaults to the value of the
+ensure-parameter)
 
 Default value: ``undef``
 

@@ -36,49 +36,49 @@
 #
 # @param monitors
 #   A hash of tests to configure
-# @option monitors :script_source
+# @option monitors :script_source [String]
 #   A Puppet file source to the script for the monitor
-# @option monitors :clientlaunch_config
+# @option monitors :clientlaunch_config [String]
 #   Path to the Xymon clientlaunch path.
-# @option monitors :files_path
+# @option monitors :files_path [String]
 #   Path to the a path for additional files.
-# @option monitors :xymon_user
+# @option monitors :xymon_user [String]
 #   Xymon user.
-# @option monitors :xymon_group
+# @option monitors :xymon_group [String]
 #   Xymon group.
-# @option monitors :xymon_service
+# @option monitors :xymon_service [String]
 #   Xymon service name.
-# @option monitors :interval
+# @option monitors :interval [String]
 #   A valid Xymon client interval string when to run the script
-# @option monitors :arguments
+# @option monitors :arguments [Array[String]]
 #   A list of command line arguments to start the script with
-# @option monitors :require_fqdn
+# @option monitors :require_fqdn [String]
 #   Require that the agent has the specified FQDN for the monitor to be installed
-# @option monitors :files
+# @option monitors :files [Hash]
 #   A hash of filenames as key and sources as values to add to the xymon files
-# @option files :source
+# @option files :source [String]
 #   A Puppet file source for the additional file for the monitor
-# @option files :template
+# @option files :template [String]
 #   A Puppet template for the additional file for the monitor
-# @option files :vars
+# @option files :vars [Hash]
 #   A hash of variables used in the template
-# @option files :mode
+# @option files :mode [String]
 #   file mode of the additional file for the monitor
-# @option files :owner
+# @option files :owner [String]
 #   owner of the additional file for the monitor
-# @option files :group
+# @option files :group [String]
 #   group of the additional file for the monitor
-# @option monitors :sudo
+# @option monitors :sudo [Hash]
 #   A sudo::conf hash with sudo definitions the xymon user should be allowed to use
-# @option monitors :packages
+# @option monitors :packages [Hash]
 #   A puppet package hash with packages that are required for the monitor to work
-# @option monitors :logrotate
+# @option monitors :logrotate [Hash]
 #   A hash containing definitions to configure logfile rotation
-# @option logrotate :path
+# @option logrotate :path [String]
 #   path for the file to logrotate
-# @option logrotate :size
+# @option logrotate :size [String]
 #   file size threshold when to rotate (human readable format accepted)
-# @option logrotate :rotate
+# @option logrotate :rotate [Integer]
 #   how many times the log is rotated until it is deleted
 #
 # @param client_name

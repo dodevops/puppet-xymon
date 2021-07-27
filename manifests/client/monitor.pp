@@ -42,17 +42,17 @@
 #
 # @param files
 #   A hash of filenames as key and sources as values to add to the xymon files
-# @option files :source
+# @option files :source [String]
 #   A Puppet file source for the additional file for the monitor (mutually exclusive with template)
-# @option files :template
+# @option files :template [String]
 #   A Puppet template for the additional file for the monitor (mutually exclusive with source)
-# @option files :vars
+# @option files :vars [Hash]
 #   A hash of variables used in the template
-# @option files :mode
+# @option files :mode [String]
 #   file mode of the additional file for the monitor
-# @option files :owner
+# @option files :owner [String]
 #   owner of the additional file for the monitor
-# @option files :group
+# @option files :group [String]
 #   group of the additional file for the monitor
 #
 # @param sudo
@@ -63,11 +63,11 @@
 #
 # @param logrotate
 #   A hash containing definitions to configure logfile rotation
-# @option logrotate :path
+# @option logrotate :path [String]
 #   path for the file to logrotate
-# @option logrotate :size
+# @option logrotate :size [String]
 #   file size threshold when to rotate (human readable format accepted)
-# @option logrotate :rotate
+# @option logrotate :rotate [Integer]
 #   how many times the log is rotated until it is deleted
 #
 # @param ensure_packages
