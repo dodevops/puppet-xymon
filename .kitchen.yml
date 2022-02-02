@@ -20,18 +20,18 @@ platforms:
     -   name: "ubuntu-16.04"
         provisioner:
             name: "puppet_apply"
-            puppet_apt_repo: "http://apt.puppet.com/puppet6-release-xenial.deb"
+            puppet_apt_collections_repo: "http://apt.puppet.com/puppet6-release-xenial.deb"
     -   name: "ubuntu-18.04"
         provisioner:
             name: "puppet_apply"
-            puppet_apt_repo: "http://apt.puppet.com/puppet6-release-bionic.deb"
+            puppet_apt_collections_repo: "http://apt.puppet.com/puppet6-release-bionic.deb"
     -   name: "centos-7"
         driver_config:
             run_command: "/usr/sbin/init"
             privileged: true
         provisioner:
             name: "puppet_apply"
-            puppet_yum_repo: "https://yum.puppet.com/puppet6-release-el-7.noarch.rpm"
+            puppet_yum_collections_repo: "https://yum.puppet.com/puppet6-release-el-7.noarch.rpm"
 
 suites:
     -   name: "default"
