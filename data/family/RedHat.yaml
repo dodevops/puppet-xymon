@@ -1,1 +1,2 @@
 xymon::client::config_file: "/etc/sysconfig/xymon-client"
+xymon::client::include_clientlaunch_d: false

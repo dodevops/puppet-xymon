@@ -7,6 +7,10 @@
 # @param manage_repository
 #   Manage the repository for package installation
 #
+# @param include_clientlaunch_d
+#   Ensure, that clientlaunch.d/*.cfg is included in clientlaunch.cfg - some xymon packages miss to do so.
+#   Will not remove any include value false!
+#
 # @param config_file
 #   Path to the xymon-client configuration file
 #
@@ -138,6 +142,7 @@
 class xymon::client (
   String $xymon_server,
   Boolean $manage_repository            = true,
+  Boolean $include_clientlaunch_d       = false,
   String $config_file                   = '/etc/default/xymon-client',
   String $package                       = 'xymon-client',
   String $service_name                  = 'xymon-client',
@@ -239,6 +244,14 @@ class xymon::client (
   -> service {
     $service_name:
       ensure => 'running'
+  }
+
+  if ($include_clientlaunch_d) {
+    file_line { 'include_clientlaunch_d':
+      path => "${xymon_config_dir}/clientlaunch.cfg",
+      line => "directory ${actual_clientlaunch_config}",
+    }
+    File[$actual_clientlaunch_config] -> File_line[include_clientlaunch_d] -> Service[$service_name]
   }
 
   if ($monitors) {
