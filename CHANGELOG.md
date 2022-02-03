@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.0.1](https://github.com/dodevops/puppet-xymon/tree/v1.0.1) (2022-02-03)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v1.0.0...v1.0.1)
+
+### Fixed
+
+- fix: Fixed kitchen tests [\#9](https://github.com/dodevops/puppet-xymon/pull/9) ([timdeluxe](https://github.com/timdeluxe))
+- fix: Take care of clientlaunch.d include on Suse [\#8](https://github.com/dodevops/puppet-xymon/pull/8) ([timdeluxe](https://github.com/timdeluxe))
+
 ## [v1.0.0](https://github.com/dodevops/puppet-xymon/tree/v1.0.0) (2021-07-27)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v0.4.4...v1.0.0)

@@ -1,6 +1,6 @@
 {
   "name": "dodevops-xymon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "dodevops",
   "summary": "Puppet module for managing Xymon",
   "license": "MIT",
