@@ -23,16 +23,19 @@ describe 'xymon::client' do
             is_expected.to contain_class('xymon::repository::apt')
             is_expected.to contain_apt__source('xymon')
             is_expected.to contain_apt__key('6688A3782BBFE5A4')
+            is_expected.not_to contain_file_line('include_clientlaunch_d')
           }
         when 'RedHat'
           it {
             is_expected.to contain_class('xymon::repository::yum')
             is_expected.to contain_yumrepo('xymon')
+            is_expected.not_to contain_file_line('include_clientlaunch_d')
           }
         when 'Suse'
           it {
             is_expected.to contain_class('xymon::repository::zypper')
             is_expected.to contain_zypprepo('xymon')
+            is_expected.to contain_file_line('include_clientlaunch_d')
           }
         else
           raise("Invalid os family #{os_facts[:os]['family']}")
