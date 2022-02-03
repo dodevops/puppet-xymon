@@ -8,8 +8,9 @@
 #   Manage the repository for package installation
 #
 # @param include_clientlaunch_d
-#   Ensure, that clientlaunch.d/*.cfg is included in clientlaunch.cfg - some xymon packages miss to do so.
-#   Will not remove any include value false!
+#   If set to true, it is ensured, that directory "clientlaunch.d" is included in clientlaunch.cfg - some xymon packages miss to do so.
+#   If set to false, clientlaunch.cfg will not be touched (an existing directory include statement will not be removed, but also not be
+#   added, if it is missing).
 #
 # @param config_file
 #   Path to the xymon-client configuration file
@@ -251,7 +252,7 @@ class xymon::client (
       path => "${xymon_config_dir}/clientlaunch.cfg",
       line => "directory ${actual_clientlaunch_config}",
     }
-    File[$actual_clientlaunch_config] -> File_line[include_clientlaunch_d] -> Service[$service_name]
+    File[$actual_clientlaunch_config] -> File_line['include_clientlaunch_d'] ~> Service[$service_name]
   }
 
   if ($monitors) {
