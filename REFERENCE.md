@@ -78,6 +78,7 @@ The following parameters are available in the `xymon::client` class:
 
 * [`xymon_server`](#xymon_server)
 * [`manage_repository`](#manage_repository)
+* [`include_clientlaunch_d`](#include_clientlaunch_d)
 * [`config_file`](#config_file)
 * [`package`](#package)
 * [`service_name`](#service_name)
@@ -105,6 +106,16 @@ Data type: `Boolean`
 Manage the repository for package installation
 
 Default value: ``true``
+
+##### <a name="include_clientlaunch_d"></a>`include_clientlaunch_d`
+
+Data type: `Boolean`
+
+If set to true, it is ensured, that directory "clientlaunch.d" is included in clientlaunch.cfg - some xymon packages miss to do so.
+If set to false, clientlaunch.cfg will not be touched (an existing directory include statement will not be removed, but also not be
+added, if it is missing).
+
+Default value: ``false``
 
 ##### <a name="config_file"></a>`config_file`
 
