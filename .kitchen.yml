@@ -5,7 +5,7 @@ driver:
     use_sudo: false # because of https://github.com/test-kitchen/kitchen-docker/issues/207
     memory: "2G"
     provision_command: |
-        touch /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/10_testsudo3
+        touch /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/kitchen
 
 provisioner:
     name: "puppet_apply"
@@ -17,21 +17,14 @@ provisioner:
     ignore_spec_fixtures: true
 
 platforms:
-    -   name: "ubuntu-16.04"
+    -   name: "ubuntu-20.04"
         provisioner:
             name: "puppet_apply"
-            puppet_apt_collections_repo: "http://apt.puppet.com/puppet6-release-xenial.deb"
+            puppet_apt_collections_repo: "http://apt.puppet.com/puppet6-release-focal.deb"
     -   name: "ubuntu-18.04"
         provisioner:
             name: "puppet_apply"
             puppet_apt_collections_repo: "http://apt.puppet.com/puppet6-release-bionic.deb"
-    -   name: "centos-7"
-        driver_config:
-            run_command: "/usr/sbin/init"
-            privileged: true
-        provisioner:
-            name: "puppet_apply"
-            puppet_yum_collections_repo: "https://yum.puppet.com/puppet6-release-el-7.noarch.rpm"
 
 suites:
     -   name: "default"
