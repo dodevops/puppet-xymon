@@ -103,9 +103,9 @@ define xymon::client::monitor (
       default => $ensure_packages
     }
     $_interval = $interval ? {
-      null    => $cron_date ? {
-        null    => '5m',
-        default => null,
+      undef   => $cron_date ? {
+        undef   => '5m',
+        default => undef,
       },
       default => $interval,
     }
@@ -216,7 +216,7 @@ define xymon::client::monitor (
             name      => $name,
             script    => "${clientlaunch_config}/${name}.sh",
             arguments => join($arguments, ' '),
-            interval  => $interval,
+            interval  => $_interval,
             cron_date => $cron_date,
           }
         )

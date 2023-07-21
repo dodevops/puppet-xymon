@@ -29,4 +29,5 @@ platforms:
 suites:
     -   name: "default"
     -   name: "monitors"
+    -   name: "crondate"
 
