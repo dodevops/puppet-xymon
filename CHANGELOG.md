@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.0.2](https://github.com/dodevops/puppet-xymon/tree/v1.0.2) (2023-06-15)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v1.0.1...v1.0.2)
+
+### UNCATEGORIZED PRS; GO LABEL THEM
+
+- chore: Moved workflows to Github actions [\#10](https://github.com/dodevops/puppet-xymon/pull/10) ([dploeger](https://github.com/dploeger))
+
 ## [v1.0.1](https://github.com/dodevops/puppet-xymon/tree/v1.0.1) (2022-02-03)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v1.0.0...v1.0.1)
