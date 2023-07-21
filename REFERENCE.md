@@ -364,8 +364,9 @@ The following parameters are available in the `xymon::client::monitor` defined t
 * [`xymon_group`](#xymon_group)
 * [`xymon_service`](#xymon_service)
 * [`ensure`](#ensure)
-* [`interval`](#interval)
 * [`arguments`](#arguments)
+* [`interval`](#interval)
+* [`crondate`](#crondate)
 * [`require_fqdn`](#require_fqdn)
 * [`script_source`](#script_source)
 * [`script_template`](#script_template)
@@ -375,6 +376,7 @@ The following parameters are available in the `xymon::client::monitor` defined t
 * [`packages`](#packages)
 * [`logrotate`](#logrotate)
 * [`ensure_packages`](#ensure_packages)
+* [`cron_date`](#cron_date)
 
 ##### <a name="clientlaunch_config"></a>`clientlaunch_config`
 
@@ -424,14 +426,6 @@ Ensure if monitor is either present or absent
 
 Default value: `'present'`
 
-##### <a name="interval"></a>`interval`
-
-Data type: `String`
-
-A valid Xymon client interval string when to run the script
-
-Default value: `'5m'`
-
 ##### <a name="arguments"></a>`arguments`
 
 Data type: `Array[String]`
@@ -439,6 +433,19 @@ Data type: `Array[String]`
 A list of command line arguments to start the script with
 
 Default value: `[]`
+
+##### <a name="interval"></a>`interval`
+
+Data type: `Optional[String]`
+
+A valid Xymon client interval string when to run the script. If neither interval nor
+crondate is set, interval is set to a default of 5m
+
+Default value: ``undef``
+
+##### <a name="crondate"></a>`crondate`
+
+A cron time expression as an alternative to the interval parameter
 
 ##### <a name="require_fqdn"></a>`require_fqdn`
 
@@ -525,6 +532,14 @@ Data type: `Optional[Enum['present', 'absent']]`
 
 Ensure that installed packages from the packages repository are present or absent (defaults to the value of the
 ensure-parameter)
+
+Default value: ``undef``
+
+##### <a name="cron_date"></a>`cron_date`
+
+Data type: `Optional[String]`
+
+
 
 Default value: ``undef``
 
