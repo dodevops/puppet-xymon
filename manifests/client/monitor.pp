@@ -22,11 +22,15 @@
 # @param ensure
 #   Ensure if monitor is either present or absent
 #
-# @param interval
-#   A valid Xymon client interval string when to run the script
-#
 # @param arguments
 #   A list of command line arguments to start the script with
+#
+# @param interval
+#   A valid Xymon client interval string when to run the script. If neither interval nor
+#   crondate is set, interval is set to a default of 5m
+#
+# @param crondate
+#   A cron time expression as an alternative to the interval parameter
 #
 # @param require_fqdn
 #   Require that the agent has the specified FQDN for the monitor to be installed
@@ -80,8 +84,9 @@ define xymon::client::monitor (
   String $xymon_group                                  = $xymon::client::xymon_group,
   String $xymon_service                                = $xymon::client::service_name,
   Enum['present', 'absent'] $ensure                    = 'present',
-  String $interval                                     = '5m',
   Array[String] $arguments                             = [],
+  Optional[String] $interval                           = undef,
+  Optional[String] $cron_date                          = undef,
   Optional[String] $require_fqdn                       = undef,
   Optional[String] $script_source                      = undef,
   Optional[String] $script_template                    = undef,
@@ -96,6 +101,13 @@ define xymon::client::monitor (
     $_ensure_packages = $ensure_packages ? {
       undef   => $ensure,
       default => $ensure_packages
+    }
+    $_interval = $interval ? {
+      null    => $cron_date ? {
+        null    => '5m',
+        default => null,
+      },
+      default => $interval,
     }
     if ($files) {
       $files.each |String $key, Hash $value| {
@@ -203,8 +215,9 @@ define xymon::client::monitor (
           {
             name      => $name,
             script    => "${clientlaunch_config}/${name}.sh",
+            arguments => join($arguments, ' '),
             interval  => $interval,
-            arguments => join($arguments, ' ')
+            cron_date => $cron_date,
           }
         )
     } ~> Service[$xymon_service]
