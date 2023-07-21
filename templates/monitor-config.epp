@@ -1,6 +1,10 @@
-<% | String $name, String $script, String $interval, String $arguments | -%>
+<% | String $name, String $script, String $arguments, Optional[String] $interval, Optional[String] $cron_date | -%>
 [<%= $name %>]
 ENVFILE $XYMONCLIENTHOME/etc/xymonclient.cfg
 CMD <%= $script %> <%= $arguments %>
 LOGFILE $XYMONCLIENTLOGS/<%= $name %>.log
+<% if $interval { -%>
 INTERVAL <%= $interval %>
+<% } elsif $cron_date { -%>
+CRONDATE <%= $cron_date %>
+<% } -%>
