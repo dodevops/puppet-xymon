@@ -30,10 +30,12 @@ group :development do
   gem "puppet-module-win-dev-r#{minor_version}", '~> 0.3',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "kitchen-docker", '2.13.0',                                require: false
   gem "kitchen-puppet", '3.6.0',                                 require: false
-  gem "serverspec", '2.41.5',                                    require: false
-  gem "test-kitchen", '2.2.5',                                   require: false
+  gem "serverspec", '2.42.3',                                    require: false
+  gem "test-kitchen", '3.5.0',                                   require: false
   gem "github_changelog_generator",                              require: false, git: 'https://github.com/skywinder/github-changelog-generator', ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
   gem "puppet-strings", "~> 2.8"
+  gem "net-ssh", '>= 7.0.0',                                     require: false
+  gem 'kitchen-verifier-serverspec'
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
