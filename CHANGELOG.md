@@ -2,13 +2,21 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.1.2](https://github.com/dodevops/puppet-xymon/tree/v1.1.2) (2024-04-02)
+
+[Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v1.1.1...v1.1.2)
+
+### Fixed
+
+- fix: Bump upper version for different deps [\#13](https://github.com/dodevops/puppet-xymon/pull/13) ([dploeger](https://github.com/dploeger))
+
 ## [v1.1.1](https://github.com/dodevops/puppet-xymon/tree/v1.1.1) (2023-07-21)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v1.1.0...v1.1.1)
 
 ### Fixed
 
-- fix: Fixed interval handling
+- fix: Fixed interval handling [\#12](https://github.com/dodevops/puppet-xymon/pull/12) ([dploeger](https://github.com/dploeger))
 
 ## [v1.1.0](https://github.com/dodevops/puppet-xymon/tree/v1.1.0) (2023-07-21)
 
@@ -16,7 +24,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- feat: Support CRONDATE
+- feat: Support CRONDATE [\#11](https://github.com/dodevops/puppet-xymon/pull/11) ([dploeger](https://github.com/dploeger))
 
 ## [v1.0.2](https://github.com/dodevops/puppet-xymon/tree/v1.0.2) (2023-06-15)
 
