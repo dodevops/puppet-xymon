@@ -1,6 +1,6 @@
 {
   "name": "dodevops-xymon",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "dodevops",
   "summary": "Puppet module for managing Xymon",
   "license": "MIT",
@@ -10,15 +10,15 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">=4.25.1 < 7.0.0"
+      "version_requirement": ">=4.25.1 < 10.0.0"
     },
     {
       "name": "puppetlabs/apt",
-      "version_requirement": ">=4.5.1 < 8.0.0"
+      "version_requirement": ">=4.5.1 < 10.0.0"
     },
     {
       "name": "saz/sudo",
-      "version_requirement": ">=6.0.0 < 7.0.0"
+      "version_requirement": ">=6.0.0 < 9.0.0"
     },
     {
       "name": "puppet/zypprepo",
@@ -30,7 +30,7 @@
     },
     {
       "name": "puppet-logrotate",
-      "version_requirement": ">=4.0.0 < 7.0.0"
+      "version_requirement": ">=4.0.0 < 8.0.0"
     }
   ],
   "operatingsystem_support": [
