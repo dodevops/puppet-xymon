@@ -142,6 +142,7 @@
 #        }
 class xymon::client (
   String $xymon_server,
+  String $package_ensure                = 'latest',
   Boolean $manage_repository            = true,
   Boolean $include_clientlaunch_d       = false,
   String $config_file                   = '/etc/default/xymon-client',
@@ -217,7 +218,7 @@ class xymon::client (
 
   package {
     $package:
-      ensure  => 'latest',
+      ensure => $package_ensure,
   }
 
   file {
@@ -260,7 +261,7 @@ class xymon::client (
       'xymon::client::monitor',
       $monitors,
       {
-        require             => Package[$package],
+        require => Package[$package],
       }
     )
   }

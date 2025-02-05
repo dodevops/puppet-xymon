@@ -48,6 +48,25 @@ describe 'xymon::client' do
           is_expected.to contain_service('xymon-client')
         }
       end
+      context 'ensure present' do
+        let(:facts) { os_facts }
+
+        let(:params) do
+          {
+            repository_url: 'https://repo.company.com',
+            gpg_url: 'https://repo.company.com/gpg',
+            gpg_id: '6688A3782BBFE5A4',
+            xymon_server: 'xymon.company.com',
+            config_file: '/etc/xymon.conf',
+            package: 'xymon-client',
+            package_ensure: 'present',
+          }
+        end
+
+        it {
+          is_expected.to contain_package('xymon-client').with_ensure('present')
+        }
+      end
     end
   end
 end
