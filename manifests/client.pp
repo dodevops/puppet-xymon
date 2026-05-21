@@ -171,7 +171,7 @@ class xymon::client (
   }
 
   $_client_name = $client_name ? {
-    undef   => $facts['fqdn'],
+    undef   => $facts['networking']['fqdn'],
     default => $client_name
   }
 

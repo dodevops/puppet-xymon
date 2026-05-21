@@ -97,7 +97,7 @@ define xymon::client::monitor (
   Optional[Hash] $logrotate                            = undef,
   Optional[Enum['present', 'absent']] $ensure_packages = undef,
 ) {
-  if (!$require_fqdn or $facts['fqdn'] == $require_fqdn) {
+  if (!$require_fqdn or $facts['networking']['fqdn'] == $require_fqdn) {
     $_ensure_packages = $ensure_packages ? {
       undef   => $ensure,
       default => $ensure_packages
