@@ -174,7 +174,7 @@ define xymon::client::monitor (
     }
 
     if ($packages) {
-      ensure_packages(
+      stdlib::ensure_packages(
         $packages,
         {
           ensure => $_ensure_packages,
