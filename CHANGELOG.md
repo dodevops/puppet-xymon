@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Unreleased
+
+### Changed
+
+- The apt repository key from `gpg_url` is stored in `/etc/apt/keyrings` instead of using `apt-key`, which no longer exists on Debian 13. `gpg_id` is unused.
+- Requires `puppetlabs/stdlib` >= 9.0.0 and `puppetlabs/apt` >= 9.2.0
+
+### Added
+
+- Puppet 8 / OpenVox 8 support
+- Allow `saz/sudo` 10, `puppetlabs/apt` 11, `puppet/logrotate` 10, `puppetlabs/yumrepo_core` 3 and `puppetlabs/stdlib` 10
+
 ## [v1.2.0](https://github.com/dodevops/puppet-xymon/tree/v1.2.0) (2025-02-06)
 
 [Full Changelog](https://github.com/dodevops/puppet-xymon/compare/v1.1.2...v1.2.0)

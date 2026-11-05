@@ -1,25 +1,24 @@
 # @summary Install the APT repository, key (optionally) and the pacakge
 # @param repository_url URL of the repository that contains the xymon-client
 # @param package Package name
-# @param gpg_url URL of the GPG key
-# @param gpg_id Key id of the gpg key
+# @param gpg_url URL of the GPG key, stored as keyring in /etc/apt/keyrings
 class xymon::repository::apt (
   String $repository_url,
   String $package,
   Optional[String] $gpg_url = undef,
-  Optional[String] $gpg_id  = undef,
 ) {
-  apt::source {
-    'xymon':
-      location => $repository_url,
-      before   => Package[$package],
+  # apt reads binary keys only from *.gpg and ASCII armored keys only from *.asc
+  $_key = $gpg_url ? {
+    undef   => undef,
+    default => {
+      'name'   => $gpg_url ? { /\.gpg\z/ => 'xymon.gpg', default => 'xymon.asc' },
+      'source' => $gpg_url,
+    },
   }
 
-  if ($gpg_url) {
-    apt::key {
-      $gpg_id:
-        source => $gpg_url,
-        before => Apt::Source['xymon'],
-    }
+  apt::source { 'xymon':
+    location => $repository_url,
+    key      => $_key,
+    before   => Package[$package],
   }
 }

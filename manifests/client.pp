@@ -40,7 +40,7 @@
 #   URL of the GPG key
 #
 # @param gpg_id
-#   Key id of the gpg key (Required by apt)
+#   Unused, apt stores the key from gpg_url as keyring
 #
 # @param monitors
 #   A hash of tests to configure
@@ -104,7 +104,6 @@
 #        repository_url = 'https://my.repository.company.com/repo',
 #        xymon_server = 'xymon.company.com',
 #        gpg_url = 'https://my.repository.company.com/gpg',
-#        gpg_id = '6688A3782BBFE5A4',
 #        monitors = {
 #            'mycheck' => {
 #              script_source => 'puppet:///my/script.sh'
@@ -184,16 +183,11 @@ class xymon::client (
 
     case $facts['os']['family'] {
       'Debian': {
-        if ($gpg_url and !$gpg_id) {
-          fail('GPG-URL specified, but no GPG ID given')
-        }
-
         class {
           'xymon::repository::apt':
             repository_url => $repository_url,
             package        => $package,
             gpg_url        => $gpg_url,
-            gpg_id         => $gpg_id,
         }
       }
       'RedHat': {

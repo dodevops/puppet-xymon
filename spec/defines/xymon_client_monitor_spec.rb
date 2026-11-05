@@ -10,7 +10,6 @@ describe 'xymon::client::monitor' do
       'xymon::client':
         repository_url =>'https://repo.company.com',
         gpg_url => 'https://repo.company.com/gpg',
-        gpg_id => '6688A3782BBFE5A4',
         xymon_server => 'xymon.company.com',
         config_file => '/etc/xymon.conf',
         package => 'xymon-client',
@@ -22,7 +21,7 @@ describe 'xymon::client::monitor' do
     context "on #{os}" do
       context 'default' do
         let(:facts) do
-          os_facts.merge!(
+          os_facts.merge(
             sudoversion: '3.0.0',
           )
         end
@@ -53,7 +52,7 @@ describe 'xymon::client::monitor' do
         end
 
         it {
-          is_expected.to compile
+          is_expected.to compile.with_all_deps
           is_expected.to contain_sudo__conf('callroot')
           is_expected.to contain_package('sysstat')
           is_expected.to contain_xymon__client__monitor('testmonitor')
@@ -62,6 +61,32 @@ describe 'xymon::client::monitor' do
           is_expected.to contain_file('/etc/xymon/clientlaunch.d/testmonitor.sh')
           is_expected.to contain_file('/etc/xymon/clientlaunch.d/testmonitor.cfg')
         }
+      end
+
+      context 'with logrotate' do
+        let(:facts) { os_facts.merge(sudoversion: '3.0.0') }
+        let(:params) do
+          {
+            script_source: 'puppet://xymon/testmonitor.sh',
+            logrotate: {
+              'path' => '/var/log/xymon/testmonitor.log',
+              'size' => '10M',
+              'rotate' => 5,
+            },
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+
+        it do
+          is_expected.to contain_logrotate__rule('testmonitor.monitor').with(
+            ensure: 'present',
+            path: '/var/log/xymon/testmonitor.log',
+            size: '10M',
+            rotate: 5,
+            compress: true,
+          )
+        end
       end
     end
   end

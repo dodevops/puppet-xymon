@@ -31,7 +31,6 @@ class {
     repository_url = 'https://my.repository.company.com/repo',
     xymon_server = 'xymon.company.com',
     gpg_url = 'https://my.repository.company.com/gpg',
-    gpg_id = '6688A3782BBFE5A4',
     monitors = {
         'mycheck' => {
           script_source => 'puppet:///my/script.sh'
@@ -194,7 +193,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-Key id of the gpg key (Required by apt)
+Unused, apt stores the key from gpg_url as keyring
 
 Default value: `undef`
 
@@ -257,7 +256,6 @@ The following parameters are available in the `xymon::repository::apt` class:
 * [`repository_url`](#-xymon--repository--apt--repository_url)
 * [`package`](#-xymon--repository--apt--package)
 * [`gpg_url`](#-xymon--repository--apt--gpg_url)
-* [`gpg_id`](#-xymon--repository--apt--gpg_id)
 
 ##### <a name="-xymon--repository--apt--repository_url"></a>`repository_url`
 
@@ -275,15 +273,7 @@ Package name
 
 Data type: `Optional[String]`
 
-URL of the GPG key
-
-Default value: `undef`
-
-##### <a name="-xymon--repository--apt--gpg_id"></a>`gpg_id`
-
-Data type: `Optional[String]`
-
-Key id of the gpg key
+URL of the GPG key, stored as keyring in /etc/apt/keyrings
 
 Default value: `undef`
 

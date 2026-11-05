@@ -12,7 +12,6 @@ describe 'xymon::client' do
           {
             repository_url: 'https://repo.company.com',
             gpg_url: 'https://repo.company.com/gpg',
-            gpg_id: '6688A3782BBFE5A4',
             xymon_server: 'xymon.company.com',
             config_file: '/etc/xymon.conf',
             package: 'xymon-client',
@@ -23,8 +22,12 @@ describe 'xymon::client' do
         when 'Debian'
           it {
             is_expected.to contain_class('xymon::repository::apt')
-            is_expected.to contain_apt__source('xymon')
-            is_expected.to contain_apt__key('6688A3782BBFE5A4')
+            is_expected.to contain_apt__source('xymon').with_key(
+              'name' => 'xymon.asc',
+              'source' => 'https://repo.company.com/gpg',
+            )
+            is_expected.to contain_apt__keyring('xymon.asc').with_source('https://repo.company.com/gpg')
+            is_expected.not_to contain_apt__key('6688A3782BBFE5A4')
             is_expected.not_to contain_file_line('include_clientlaunch_d')
           }
         when 'RedHat'
@@ -44,11 +47,41 @@ describe 'xymon::client' do
         end
 
         it {
-          is_expected.to compile
+          is_expected.to compile.with_all_deps
           is_expected.to contain_package('xymon-client')
           is_expected.to contain_file('/etc/xymon.conf')
           is_expected.to contain_service('xymon-client')
         }
+      end
+
+      if os_facts[:os]['family'] == 'Debian'
+        context 'with a binary key' do
+          let(:facts) { os_facts }
+          let(:params) do
+            {
+              repository_url: 'https://repo.company.com',
+              gpg_url: 'https://repo.company.com/xymon.gpg',
+              xymon_server: 'xymon.company.com',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_apt__keyring('xymon.gpg').with_source('https://repo.company.com/xymon.gpg') }
+        end
+
+        context 'without key' do
+          let(:facts) { os_facts }
+          let(:params) do
+            {
+              repository_url: 'https://repo.company.com',
+              xymon_server: 'xymon.company.com',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_apt__source('xymon').with_key(nil) }
+          it { is_expected.not_to contain_apt__keyring('xymon.asc') }
+        end
       end
 
       context 'ensure present' do
@@ -58,7 +91,6 @@ describe 'xymon::client' do
           {
             repository_url: 'https://repo.company.com',
             gpg_url: 'https://repo.company.com/gpg',
-            gpg_id: '6688A3782BBFE5A4',
             xymon_server: 'xymon.company.com',
             config_file: '/etc/xymon.conf',
             package: 'xymon-client',
