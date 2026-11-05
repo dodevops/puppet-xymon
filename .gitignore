@@ -29,3 +29,4 @@
 /test/integration/**/.tmp
 .kitchen
 .vscode
+/test/integration/*/puppet/Puppetfile.lock

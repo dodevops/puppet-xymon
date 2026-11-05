@@ -26,6 +26,13 @@ bundle install
 bundle exec rake test rubocop
 ```
 
+The integration tests apply the module with OpenVox 8 in Docker containers (Debian 12/13, Ubuntu 24.04)
+and check the result with serverspec:
+
+```sh
+bundle exec kitchen test
+```
+
 ### Creating a release
 
 * Configure the target version in metadata.json

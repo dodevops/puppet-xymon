@@ -4,44 +4,42 @@ driver:
   test_base_path: "test"
   use_sudo: false # because of https://github.com/test-kitchen/kitchen-docker/issues/207
   memory: "2G"
-  provision_command: |
-    touch /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/kitchen
 
 provisioner:
   name: "puppet_apply"
   manifest: "site.pp"
   puppet_debug: true
+  # kitchen-puppet installs the package "puppet-agent", which is Puppet 7 on Debian,
+  # so openvox-agent is installed by the driver instead
+  require_puppet_collections: false
+  require_puppet_repo: false
+  puppet_binary: "/opt/puppetlabs/bin/puppet"
   ignored_paths_from_root:
     - "spec"
     - "vendor"
   ignore_spec_fixtures: true
 
 platforms:
-  - name: "ubuntu-22.04"
-    provisioner:
-      name: "puppet_apply"
-      puppet_apt_collections_repo: "http://apt.puppet.com/puppet7-release-jammy.deb"
-  - name: "ubuntu-20.04"
-    provisioner:
-      name: "puppet_apply"
-      puppet_apt_collections_repo: "http://apt.puppet.com/puppet7-release-focal.deb"
+<% { 'debian-12' => 'debian12', 'debian-13' => 'debian13', 'ubuntu-24.04' => 'ubuntu24.04' }.each_pair do |platform, release| %>
+  - name: "<%= platform %>"
+    driver:
+      provision_command:
+        - apt-get install -y wget ca-certificates ruby ruby-bundler
+        - wget -q -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-<%= release %>.deb
+        - dpkg -i /tmp/openvox8-release.deb && apt-get update && apt-get install -y openvox-agent
+        - touch /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/10_testsudo3 && chmod 0440 /etc/sudoers.d/kitchen
+<% end %>
 
+# without patterns kitchen-verifier-serverspec runs no specs at all and still passes
 verifier:
   name: serverspec
+  patterns:
+    - "/etc/puppet/spec/localhost/*_spec.rb"
+  extra_flags: "-I /etc/puppet/spec"
 
 suites:
-  - name: "default"
-    verifier:
-      custom_install_command: sudo ln -s /usr/bin/bundle3.0 /usr/local/bin/bundle
-      bundler_path: '/usr/local/bin'
-      rspec_path: '/usr/local/bin'
-  - name: "monitors"
-    verifier:
-      custom_install_command: sudo ln -s /usr/bin/bundle3.0 /usr/local/bin/bundle
-      bundler_path: '/usr/local/bin'
-      rspec_path: '/usr/local/bin'
-  - name: "crondate"
-    verifier:
-      custom_install_command: sudo ln -s /usr/bin/bundle3.0 /usr/local/bin/bundle
-      bundler_path: '/usr/local/bin'
-      rspec_path: '/usr/local/bin'
+<% %w[default monitors crondate].each do |suite| %>
+  - name: "<%= suite %>"
+    provisioner:
+      spec_files_path: "test/integration/<%= suite %>/serverspec"
+<% end %>

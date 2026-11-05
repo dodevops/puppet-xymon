@@ -28,3 +28,21 @@ jobs:
           bundler-cache: true
       - name: Run static and unit tests
         run: bundle exec rake test rubocop
+
+  integration:
+    needs: check
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ['default', 'monitors', 'crondate']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Run integration tests
+        run: bundle exec kitchen test ${{ matrix.suite }} --destroy=always
+        timeout-minutes: 40
