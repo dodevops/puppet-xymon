@@ -73,8 +73,5 @@
       "name": "puppet",
       "version_requirement": ">= 5.5.0 < 9.0.0"
     }
-  ],
-  "pdk-version": "1.12.0",
-  "template-url": "pdk-default#1.12.0",
-  "template-ref": "1.12.0-0-g55d9ae2"
+  ]
 }

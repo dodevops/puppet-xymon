@@ -1,10 +1,12 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-hostname = `/opt/puppetlabs/bin/facter fqdn`.rstrip
+require 'spec_helper'
 
 # Check basic feature
 
 describe 'After xymon::client' do
+  let(:hostname) { `/opt/puppetlabs/bin/facter fqdn`.rstrip }
+
   describe file('/etc/xymon') do
     it {
       is_expected.to exist
@@ -22,8 +24,9 @@ describe 'After xymon::client' do
     it {
       is_expected.to exist
     }
+
     its(:content) do
-      is_expected.to match(%r{XYMONSERVERS="127\.0\.0\.1"})
+      is_expected.to include('XYMONSERVERS="127.0.0.1"')
       is_expected.to match(%r{CLIENTHOSTNAME="#{hostname}"})
     end
   end

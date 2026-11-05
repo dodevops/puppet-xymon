@@ -16,6 +16,6 @@ class {
       'test3' => {
         script_source => 'puppet:///modules/files/testscript2.sh',
         cron_date     => '0 0 * * *',
-      }
-    }
+      },
+    },
 }

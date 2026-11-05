@@ -12,14 +12,14 @@ class xymon::repository::apt (
   apt::source {
     'xymon':
       location => $repository_url,
-      before   => Package[$package]
+      before   => Package[$package],
   }
 
   if ($gpg_url) {
     apt::key {
       $gpg_id:
         source => $gpg_url,
-        before => Apt::Source['xymon']
+        before => Apt::Source['xymon'],
     }
   }
 }

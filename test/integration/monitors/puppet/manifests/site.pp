@@ -17,42 +17,42 @@ class {
         files         => {
           'testfile1' => {
             source => 'puppet:///modules/files/testfile1',
-          }
+          },
         },
         sudo          => {
           'testsudo' => {
-            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck'
-          }
+            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck',
+          },
         },
         packages      => {
           'curl' => {
-            ensure => 'installed'
+            ensure => 'installed',
           },
           'mc'   => {
-            ensure => 'installed'
-          }
-        }
+            ensure => 'installed',
+          },
+        },
       },
       'test2' => {
         script_source => 'puppet:///modules/files/testscript2.sh',
         files         => {
           'testfile2' => {
             source => 'puppet:///modules/files/testfile2',
-          }
+          },
         },
         sudo          => {
           'testsudo2' => {
-            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck2'
-          }
+            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck2',
+          },
         },
         packages      => {
           'curl'    => {
-            ensure => 'installed'
+            ensure => 'installed',
           },
           'sysstat' => {
-            ensure => 'installed'
-          }
-        }
+            ensure => 'installed',
+          },
+        },
       },
       'test3' => {
         ensure        => 'absent',
@@ -60,13 +60,13 @@ class {
         files         => {
           'testfile3' => {
             source => 'puppet:///modules/files/testfile2',
-          }
+          },
         },
         sudo          => {
           'testsudo3' => {
-            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck3'
-          }
+            content => 'xymon ALL=(ALL) NOPASSWD: /usr/bin/rootcheck3',
+          },
         },
-      }
-    }
+      },
+    },
 }

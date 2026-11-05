@@ -18,6 +18,9 @@
 # @param package
 #   Package name
 #
+# @param package_ensure
+#   Ensure value of the xymon client package
+#
 # @param service_name
 #   Service name
 #
@@ -159,7 +162,6 @@ class xymon::client (
   Optional[String] $clientlaunch_config = undef,
   Optional[String] $files_path          = undef,
 ) {
-
   $actual_clientlaunch_config = $clientlaunch_config ? {
     undef   => "${xymon_config_dir}/clientlaunch.d",
     default => $clientlaunch_config
@@ -199,7 +201,7 @@ class xymon::client (
           'xymon::repository::yum':
             repository_url => $repository_url,
             package        => $package,
-            gpg_url        => $gpg_url
+            gpg_url        => $gpg_url,
         }
       }
       'Suse': {
@@ -207,7 +209,7 @@ class xymon::client (
           'xymon::repository::zypper':
             repository_url => $repository_url,
             package        => $package,
-            gpg_url        => $gpg_url
+            gpg_url        => $gpg_url,
         }
       }
       default: {
@@ -230,7 +232,7 @@ class xymon::client (
           xymon_server    => $xymon_server,
         }
       ),
-      require => Package[$package]
+      require => Package[$package],
   }
 
   -> file {
@@ -245,7 +247,7 @@ class xymon::client (
 
   -> service {
     $service_name:
-      ensure => 'running'
+      ensure => 'running',
   }
 
   if ($include_clientlaunch_d) {

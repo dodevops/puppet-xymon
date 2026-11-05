@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'xymon::client' do
@@ -48,6 +50,7 @@ describe 'xymon::client' do
           is_expected.to contain_service('xymon-client')
         }
       end
+
       context 'ensure present' do
         let(:facts) { os_facts }
 

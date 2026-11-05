@@ -6,24 +6,24 @@
 
 ### Classes
 
-* [`xymon::client`](#xymonclient): Installs Xymon client, configures it and optionally sets up monitors
-* [`xymon::repository::apt`](#xymonrepositoryapt): Install the APT repository, key (optionally) and the pacakge
-* [`xymon::repository::yum`](#xymonrepositoryyum): Install the YUM repository, key (optionally) and the pacakge
-* [`xymon::repository::zypper`](#xymonrepositoryzypper): Install the Zypper repository, key (optionally) and the pacakge
+* [`xymon::client`](#xymon--client): Installs Xymon client, configures it and optionally sets up monitors
+* [`xymon::repository::apt`](#xymon--repository--apt): Install the APT repository, key (optionally) and the pacakge
+* [`xymon::repository::yum`](#xymon--repository--yum): Install the YUM repository, key (optionally) and the pacakge
+* [`xymon::repository::zypper`](#xymon--repository--zypper): Install the Zypper repository, key (optionally) and the pacakge
 
 ### Defined types
 
-* [`xymon::client::monitor`](#xymonclientmonitor): Sets up a xymon monitor
+* [`xymon::client::monitor`](#xymon--client--monitor): Sets up a xymon monitor
 
 ## Classes
 
-### <a name="xymonclient"></a>`xymon::client`
+### <a name="xymon--client"></a>`xymon::client`
 
 Installs Xymon client, configures it and optionally sets up monitors
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class {
@@ -76,38 +76,39 @@ class {
 
 The following parameters are available in the `xymon::client` class:
 
-* [`xymon_server`](#xymon_server)
-* [`manage_repository`](#manage_repository)
-* [`include_clientlaunch_d`](#include_clientlaunch_d)
-* [`config_file`](#config_file)
-* [`package`](#package)
-* [`service_name`](#service_name)
-* [`xymon_config_dir`](#xymon_config_dir)
-* [`xymon_user`](#xymon_user)
-* [`xymon_group`](#xymon_group)
-* [`repository_url`](#repository_url)
-* [`gpg_url`](#gpg_url)
-* [`gpg_id`](#gpg_id)
-* [`monitors`](#monitors)
-* [`client_name`](#client_name)
-* [`clientlaunch_config`](#clientlaunch_config)
-* [`files_path`](#files_path)
+* [`xymon_server`](#-xymon--client--xymon_server)
+* [`manage_repository`](#-xymon--client--manage_repository)
+* [`include_clientlaunch_d`](#-xymon--client--include_clientlaunch_d)
+* [`config_file`](#-xymon--client--config_file)
+* [`package`](#-xymon--client--package)
+* [`package_ensure`](#-xymon--client--package_ensure)
+* [`service_name`](#-xymon--client--service_name)
+* [`xymon_config_dir`](#-xymon--client--xymon_config_dir)
+* [`xymon_user`](#-xymon--client--xymon_user)
+* [`xymon_group`](#-xymon--client--xymon_group)
+* [`repository_url`](#-xymon--client--repository_url)
+* [`gpg_url`](#-xymon--client--gpg_url)
+* [`gpg_id`](#-xymon--client--gpg_id)
+* [`monitors`](#-xymon--client--monitors)
+* [`client_name`](#-xymon--client--client_name)
+* [`clientlaunch_config`](#-xymon--client--clientlaunch_config)
+* [`files_path`](#-xymon--client--files_path)
 
-##### <a name="xymon_server"></a>`xymon_server`
+##### <a name="-xymon--client--xymon_server"></a>`xymon_server`
 
 Data type: `String`
 
 The xymon server to use
 
-##### <a name="manage_repository"></a>`manage_repository`
+##### <a name="-xymon--client--manage_repository"></a>`manage_repository`
 
 Data type: `Boolean`
 
 Manage the repository for package installation
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="include_clientlaunch_d"></a>`include_clientlaunch_d`
+##### <a name="-xymon--client--include_clientlaunch_d"></a>`include_clientlaunch_d`
 
 Data type: `Boolean`
 
@@ -115,9 +116,9 @@ If set to true, it is ensured, that directory "clientlaunch.d" is included in cl
 If set to false, clientlaunch.cfg will not be touched (an existing directory include statement will not be removed, but also not be
 added, if it is missing).
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="config_file"></a>`config_file`
+##### <a name="-xymon--client--config_file"></a>`config_file`
 
 Data type: `String`
 
@@ -125,7 +126,7 @@ Path to the xymon-client configuration file
 
 Default value: `'/etc/default/xymon-client'`
 
-##### <a name="package"></a>`package`
+##### <a name="-xymon--client--package"></a>`package`
 
 Data type: `String`
 
@@ -133,7 +134,15 @@ Package name
 
 Default value: `'xymon-client'`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-xymon--client--package_ensure"></a>`package_ensure`
+
+Data type: `String`
+
+Ensure value of the xymon client package
+
+Default value: `'latest'`
+
+##### <a name="-xymon--client--service_name"></a>`service_name`
 
 Data type: `String`
 
@@ -141,7 +150,7 @@ Service name
 
 Default value: `'xymon-client'`
 
-##### <a name="xymon_config_dir"></a>`xymon_config_dir`
+##### <a name="-xymon--client--xymon_config_dir"></a>`xymon_config_dir`
 
 Data type: `String`
 
@@ -149,7 +158,7 @@ Directory where the xymon configs are stored
 
 Default value: `'/etc/xymon'`
 
-##### <a name="xymon_user"></a>`xymon_user`
+##### <a name="-xymon--client--xymon_user"></a>`xymon_user`
 
 Data type: `String`
 
@@ -157,7 +166,7 @@ The system user that is used by xymon
 
 Default value: `'xymon'`
 
-##### <a name="xymon_group"></a>`xymon_group`
+##### <a name="-xymon--client--xymon_group"></a>`xymon_group`
 
 Data type: `String`
 
@@ -165,31 +174,31 @@ The system group that is used by xymon
 
 Default value: `'xymon'`
 
-##### <a name="repository_url"></a>`repository_url`
+##### <a name="-xymon--client--repository_url"></a>`repository_url`
 
 Data type: `Optional[String]`
 
 URL of the repository that contains the xymon-client
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="gpg_url"></a>`gpg_url`
+##### <a name="-xymon--client--gpg_url"></a>`gpg_url`
 
 Data type: `Optional[String]`
 
 URL of the GPG key
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="gpg_id"></a>`gpg_id`
+##### <a name="-xymon--client--gpg_id"></a>`gpg_id`
 
 Data type: `Optional[String]`
 
 Key id of the gpg key (Required by apt)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="monitors"></a>`monitors`
+##### <a name="-xymon--client--monitors"></a>`monitors`
 
 Data type: `Optional[Hash]`
 
@@ -211,33 +220,33 @@ Options:
 * **:packages** `Hash`: A puppet package hash with packages that are required for the monitor to work
 * **:logrotate** `Hash`: A hash containing definitions to configure logfile rotation
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="client_name"></a>`client_name`
+##### <a name="-xymon--client--client_name"></a>`client_name`
 
 Data type: `Optional[String]`
 
 Name of the client (defaults to the FQDN)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="clientlaunch_config"></a>`clientlaunch_config`
+##### <a name="-xymon--client--clientlaunch_config"></a>`clientlaunch_config`
 
 Data type: `Optional[String]`
 
 Path ot the clientlaunch configuration directory (defaults to $xymon_config_dir/clientlaunch.d)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="files_path"></a>`files_path`
+##### <a name="-xymon--client--files_path"></a>`files_path`
 
 Data type: `Optional[String]`
 
 A path where to store additional files required by the monitors (defaults to $xymon_config_dir/files)
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="xymonrepositoryapt"></a>`xymon::repository::apt`
+### <a name="xymon--repository--apt"></a>`xymon::repository::apt`
 
 Install the APT repository, key (optionally) and the pacakge
 
@@ -245,40 +254,40 @@ Install the APT repository, key (optionally) and the pacakge
 
 The following parameters are available in the `xymon::repository::apt` class:
 
-* [`repository_url`](#repository_url)
-* [`package`](#package)
-* [`gpg_url`](#gpg_url)
-* [`gpg_id`](#gpg_id)
+* [`repository_url`](#-xymon--repository--apt--repository_url)
+* [`package`](#-xymon--repository--apt--package)
+* [`gpg_url`](#-xymon--repository--apt--gpg_url)
+* [`gpg_id`](#-xymon--repository--apt--gpg_id)
 
-##### <a name="repository_url"></a>`repository_url`
+##### <a name="-xymon--repository--apt--repository_url"></a>`repository_url`
 
 Data type: `String`
 
 URL of the repository that contains the xymon-client
 
-##### <a name="package"></a>`package`
+##### <a name="-xymon--repository--apt--package"></a>`package`
 
 Data type: `String`
 
 Package name
 
-##### <a name="gpg_url"></a>`gpg_url`
+##### <a name="-xymon--repository--apt--gpg_url"></a>`gpg_url`
 
 Data type: `Optional[String]`
 
 URL of the GPG key
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="gpg_id"></a>`gpg_id`
+##### <a name="-xymon--repository--apt--gpg_id"></a>`gpg_id`
 
 Data type: `Optional[String]`
 
 Key id of the gpg key
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="xymonrepositoryyum"></a>`xymon::repository::yum`
+### <a name="xymon--repository--yum"></a>`xymon::repository::yum`
 
 Install the YUM repository, key (optionally) and the pacakge
 
@@ -286,31 +295,31 @@ Install the YUM repository, key (optionally) and the pacakge
 
 The following parameters are available in the `xymon::repository::yum` class:
 
-* [`repository_url`](#repository_url)
-* [`package`](#package)
-* [`gpg_url`](#gpg_url)
+* [`repository_url`](#-xymon--repository--yum--repository_url)
+* [`package`](#-xymon--repository--yum--package)
+* [`gpg_url`](#-xymon--repository--yum--gpg_url)
 
-##### <a name="repository_url"></a>`repository_url`
+##### <a name="-xymon--repository--yum--repository_url"></a>`repository_url`
 
 Data type: `String`
 
 URL of the repository that contains the xymon-client
 
-##### <a name="package"></a>`package`
+##### <a name="-xymon--repository--yum--package"></a>`package`
 
 Data type: `String`
 
 Package name
 
-##### <a name="gpg_url"></a>`gpg_url`
+##### <a name="-xymon--repository--yum--gpg_url"></a>`gpg_url`
 
 Data type: `Optional[String]`
 
 URL of the GPG key for Debian repositories
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="xymonrepositoryzypper"></a>`xymon::repository::zypper`
+### <a name="xymon--repository--zypper"></a>`xymon::repository::zypper`
 
 Install the Zypper repository, key (optionally) and the pacakge
 
@@ -318,33 +327,33 @@ Install the Zypper repository, key (optionally) and the pacakge
 
 The following parameters are available in the `xymon::repository::zypper` class:
 
-* [`repository_url`](#repository_url)
-* [`package`](#package)
-* [`gpg_url`](#gpg_url)
+* [`repository_url`](#-xymon--repository--zypper--repository_url)
+* [`package`](#-xymon--repository--zypper--package)
+* [`gpg_url`](#-xymon--repository--zypper--gpg_url)
 
-##### <a name="repository_url"></a>`repository_url`
+##### <a name="-xymon--repository--zypper--repository_url"></a>`repository_url`
 
 Data type: `String`
 
 URL of the repository that contains the xymon-client
 
-##### <a name="package"></a>`package`
+##### <a name="-xymon--repository--zypper--package"></a>`package`
 
 Data type: `String`
 
 Package name
 
-##### <a name="gpg_url"></a>`gpg_url`
+##### <a name="-xymon--repository--zypper--gpg_url"></a>`gpg_url`
 
 Data type: `Optional[String]`
 
 URL of the GPG key
 
-Default value: ``undef``
+Default value: `undef`
 
 ## Defined types
 
-### <a name="xymonclientmonitor"></a>`xymon::client::monitor`
+### <a name="xymon--client--monitor"></a>`xymon::client::monitor`
 
 Sets up a xymon monitor
 
@@ -358,27 +367,26 @@ Sets up a xymon monitor
 
 The following parameters are available in the `xymon::client::monitor` defined type:
 
-* [`clientlaunch_config`](#clientlaunch_config)
-* [`files_path`](#files_path)
-* [`xymon_user`](#xymon_user)
-* [`xymon_group`](#xymon_group)
-* [`xymon_service`](#xymon_service)
-* [`ensure`](#ensure)
-* [`arguments`](#arguments)
-* [`interval`](#interval)
-* [`crondate`](#crondate)
-* [`require_fqdn`](#require_fqdn)
-* [`script_source`](#script_source)
-* [`script_template`](#script_template)
-* [`script_vars`](#script_vars)
-* [`files`](#files)
-* [`sudo`](#sudo)
-* [`packages`](#packages)
-* [`logrotate`](#logrotate)
-* [`ensure_packages`](#ensure_packages)
-* [`cron_date`](#cron_date)
+* [`clientlaunch_config`](#-xymon--client--monitor--clientlaunch_config)
+* [`files_path`](#-xymon--client--monitor--files_path)
+* [`xymon_user`](#-xymon--client--monitor--xymon_user)
+* [`xymon_group`](#-xymon--client--monitor--xymon_group)
+* [`xymon_service`](#-xymon--client--monitor--xymon_service)
+* [`ensure`](#-xymon--client--monitor--ensure)
+* [`arguments`](#-xymon--client--monitor--arguments)
+* [`interval`](#-xymon--client--monitor--interval)
+* [`cron_date`](#-xymon--client--monitor--cron_date)
+* [`require_fqdn`](#-xymon--client--monitor--require_fqdn)
+* [`script_source`](#-xymon--client--monitor--script_source)
+* [`script_template`](#-xymon--client--monitor--script_template)
+* [`script_vars`](#-xymon--client--monitor--script_vars)
+* [`files`](#-xymon--client--monitor--files)
+* [`sudo`](#-xymon--client--monitor--sudo)
+* [`packages`](#-xymon--client--monitor--packages)
+* [`logrotate`](#-xymon--client--monitor--logrotate)
+* [`ensure_packages`](#-xymon--client--monitor--ensure_packages)
 
-##### <a name="clientlaunch_config"></a>`clientlaunch_config`
+##### <a name="-xymon--client--monitor--clientlaunch_config"></a>`clientlaunch_config`
 
 Data type: `String`
 
@@ -386,7 +394,7 @@ Path to the Xymon clientlaunch path. Will be provided by xymon::client automatic
 
 Default value: `$xymon::client::actual_clientlaunch_config`
 
-##### <a name="files_path"></a>`files_path`
+##### <a name="-xymon--client--monitor--files_path"></a>`files_path`
 
 Data type: `String`
 
@@ -394,7 +402,7 @@ Path to the a path for additional files. Will be provided by xymon::client autom
 
 Default value: `$xymon::client::actual_files_path`
 
-##### <a name="xymon_user"></a>`xymon_user`
+##### <a name="-xymon--client--monitor--xymon_user"></a>`xymon_user`
 
 Data type: `String`
 
@@ -402,7 +410,7 @@ Xymon user. Will be provided by xymon::client automatically
 
 Default value: `$xymon::client::xymon_user`
 
-##### <a name="xymon_group"></a>`xymon_group`
+##### <a name="-xymon--client--monitor--xymon_group"></a>`xymon_group`
 
 Data type: `String`
 
@@ -410,7 +418,7 @@ Xymon group. Will be provided by xymon::client automatically
 
 Default value: `$xymon::client::xymon_group`
 
-##### <a name="xymon_service"></a>`xymon_service`
+##### <a name="-xymon--client--monitor--xymon_service"></a>`xymon_service`
 
 Data type: `String`
 
@@ -418,7 +426,7 @@ Xymon service name. Will be provided by xymon::client automatically
 
 Default value: `$xymon::client::service_name`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-xymon--client--monitor--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -426,7 +434,7 @@ Ensure if monitor is either present or absent
 
 Default value: `'present'`
 
-##### <a name="arguments"></a>`arguments`
+##### <a name="-xymon--client--monitor--arguments"></a>`arguments`
 
 Data type: `Array[String]`
 
@@ -434,52 +442,56 @@ A list of command line arguments to start the script with
 
 Default value: `[]`
 
-##### <a name="interval"></a>`interval`
+##### <a name="-xymon--client--monitor--interval"></a>`interval`
 
 Data type: `Optional[String]`
 
 A valid Xymon client interval string when to run the script. If neither interval nor
-crondate is set, interval is set to a default of 5m
+cron_date is set, interval is set to a default of 5m
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="crondate"></a>`crondate`
+##### <a name="-xymon--client--monitor--cron_date"></a>`cron_date`
+
+Data type: `Optional[String]`
 
 A cron time expression as an alternative to the interval parameter
 
-##### <a name="require_fqdn"></a>`require_fqdn`
+Default value: `undef`
+
+##### <a name="-xymon--client--monitor--require_fqdn"></a>`require_fqdn`
 
 Data type: `Optional[String]`
 
 Require that the agent has the specified FQDN for the monitor to be installed
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="script_source"></a>`script_source`
+##### <a name="-xymon--client--monitor--script_source"></a>`script_source`
 
 Data type: `Optional[String]`
 
 A Puppet file source to the script for the monitor (mutually exclusive with script_template)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="script_template"></a>`script_template`
+##### <a name="-xymon--client--monitor--script_template"></a>`script_template`
 
 Data type: `Optional[String]`
 
 A Puppet file source to the script for the monitor (mutually exclusive with script_source)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="script_vars"></a>`script_vars`
+##### <a name="-xymon--client--monitor--script_vars"></a>`script_vars`
 
 Data type: `Optional[Hash]`
 
 A hash of variables for script_template (if used)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="files"></a>`files`
+##### <a name="-xymon--client--monitor--files"></a>`files`
 
 Data type: `Optional[Hash]`
 
@@ -494,25 +506,25 @@ Options:
 * **:owner** `String`: owner of the additional file for the monitor
 * **:group** `String`: group of the additional file for the monitor
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sudo"></a>`sudo`
+##### <a name="-xymon--client--monitor--sudo"></a>`sudo`
 
 Data type: `Optional[Hash]`
 
 A sudo::conf hash with sudo definitions the xymon user should be allowed to use
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="packages"></a>`packages`
+##### <a name="-xymon--client--monitor--packages"></a>`packages`
 
 Data type: `Optional[Hash]`
 
 A puppet package hash with packages that are required for the monitor to work
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="logrotate"></a>`logrotate`
+##### <a name="-xymon--client--monitor--logrotate"></a>`logrotate`
 
 Data type: `Optional[Hash]`
 
@@ -524,22 +536,13 @@ Options:
 * **:size** `String`: file size threshold when to rotate (human readable format accepted)
 * **:rotate** `Integer`: how many times the log is rotated until it is deleted
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ensure_packages"></a>`ensure_packages`
+##### <a name="-xymon--client--monitor--ensure_packages"></a>`ensure_packages`
 
 Data type: `Optional[Enum['present', 'absent']]`
 
 Ensure that installed packages from the packages repository are present or absent (defaults to the value of the
 ensure-parameter)
 
-Default value: ``undef``
-
-##### <a name="cron_date"></a>`cron_date`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
-
+Default value: `undef`

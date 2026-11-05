@@ -27,9 +27,9 @@
 #
 # @param interval
 #   A valid Xymon client interval string when to run the script. If neither interval nor
-#   crondate is set, interval is set to a default of 5m
+#   cron_date is set, interval is set to a default of 5m
 #
-# @param crondate
+# @param cron_date
 #   A cron time expression as an alternative to the interval parameter
 #
 # @param require_fqdn
@@ -159,7 +159,6 @@ define xymon::client::monitor (
           fail('unknown additional file configuration')
         }
       }
-
     }
 
     if ($sudo) {
@@ -219,7 +218,7 @@ define xymon::client::monitor (
             interval  => $_interval,
             cron_date => $cron_date,
           }
-        )
+        ),
     } ~> Service[$xymon_service]
   }
 

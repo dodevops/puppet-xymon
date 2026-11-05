@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # Check basic feature
@@ -8,8 +10,9 @@ describe 'With configured monitors' do
       it {
         is_expected.to exist
       }
+
       its(:content) do
-        is_expected.to match(%r{INTERVAL 5m})
+        is_expected.to include('INTERVAL 5m')
       end
     end
   end
@@ -19,8 +22,9 @@ describe 'With configured monitors' do
       it {
         is_expected.to exist
       }
+
       its(:content) do
-        is_expected.to match(%r{INTERVAL 10m})
+        is_expected.to include('INTERVAL 10m')
       end
     end
   end
@@ -30,8 +34,9 @@ describe 'With configured monitors' do
       it {
         is_expected.to exist
       }
+
       its(:content) do
-        is_expected.not_to match(%r{INTERVAL 10})
+        is_expected.not_to include('INTERVAL 10')
         is_expected.to match(%r{CRONDATE 0 0 * * *})
       end
     end
