@@ -6,25 +6,25 @@ fixtures:
       ref: '10.0.1'
     apt:
       repo: 'puppetlabs/apt'
-      ref: '9.4.0'
+      ref: '11.4.1'
     zypprepo:
       repo: 'puppet/zypprepo'
       ref: '6.1.0'
     stdlib:
       repo: 'puppetlabs/stdlib'
-      ref: '9.7.0'
+      ref: '10.1.1'
     yumrepo_core:
       repo: 'puppetlabs/yumrepo_core'
-      ref: '1.2.0'
+      ref: '3.1.0'
     logrotate:
       repo: 'puppet/logrotate'
-      ref: '7.1.0'
+      ref: '10.0.0'
     systemd:
       repo: 'puppet/systemd'
-      ref: '7.1.0'
+      ref: '11.0.0'
     concat:
       repo: 'puppetlabs/concat'
-      ref: '9.1.0'
+      ref: '10.1.0'
     inifile:
       repo: 'puppetlabs/inifile'
       ref: '6.5.0'
