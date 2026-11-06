@@ -3,7 +3,7 @@ fixtures:
   forge_modules:
     sudo:
       repo: 'saz/sudo'
-      ref: '10.0.1'
+      ref: '8.0.0'
     apt:
       repo: 'puppetlabs/apt'
       ref: '9.4.0'
@@ -21,7 +21,7 @@ fixtures:
       ref: '7.1.0'
     systemd:
       repo: 'puppet/systemd'
-      ref: '7.1.0'
+      ref: '8.3.1'
     concat:
       repo: 'puppetlabs/concat'
       ref: '9.1.0'

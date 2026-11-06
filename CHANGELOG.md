@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file. The format 
 
 - The apt repository key from `gpg_url` is stored in `/etc/apt/keyrings` instead of using `apt-key`, which no longer exists on Debian 13. `gpg_id` is unused.
 - Requires `puppetlabs/stdlib` >= 9.0.0 and `puppetlabs/apt` >= 9.2.0
+- Requires OpenVox 8, `saz/sudo` >= 8.0.0, `puppet/zypprepo` 6 and `puppet/logrotate` >= 7.0.0
+- Supports Debian 12/13, Ubuntu 22.04/24.04, RedHat 8/9 and SLES 15
 
 ### Added
 

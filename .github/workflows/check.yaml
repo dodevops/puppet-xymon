@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # newest allowed dependency majors and the previous ones still allowed
+        # newest and oldest supported dependency versions
         fixtures: ['.fixtures.yml', '.fixtures-previous.yml']
     env:
       FIXTURES_YML: ${{ matrix.fixtures }}
