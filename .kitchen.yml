@@ -14,6 +14,9 @@ provisioner:
   require_puppet_collections: false
   require_puppet_repo: false
   puppet_binary: "/opt/puppetlabs/bin/puppet"
+  # without detailed exit codes a failed puppet run still counts as converged
+  puppet_detailed_exitcodes: true
+  puppet_whitelist_exit_code: [0, 2]
   ignored_paths_from_root:
     - "spec"
     - "vendor"
