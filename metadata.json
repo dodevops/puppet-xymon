@@ -18,7 +18,7 @@
     },
     {
       "name": "saz/sudo",
-      "version_requirement": ">= 8.0.0 < 11.0.0"
+      "version_requirement": ">= 10.0.0 < 11.0.0"
     },
     {
       "name": "puppet/zypprepo",
