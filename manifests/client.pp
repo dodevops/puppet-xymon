@@ -39,9 +39,6 @@
 # @param gpg_url
 #   URL of the GPG key
 #
-# @param gpg_id
-#   Unused, apt stores the key from gpg_url as keyring
-#
 # @param monitors
 #   A hash of tests to configure
 # @option monitors :script_source [String]
@@ -155,7 +152,6 @@ class xymon::client (
   String $xymon_group                   = 'xymon',
   Optional[String] $repository_url      = undef,
   Optional[String] $gpg_url             = undef,
-  Optional[String] $gpg_id              = undef,
   Optional[Hash] $monitors              = undef,
   Optional[String] $client_name         = undef,
   Optional[String] $clientlaunch_config = undef,
