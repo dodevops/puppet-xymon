@@ -87,7 +87,6 @@ The following parameters are available in the `xymon::client` class:
 * [`xymon_group`](#-xymon--client--xymon_group)
 * [`repository_url`](#-xymon--client--repository_url)
 * [`gpg_url`](#-xymon--client--gpg_url)
-* [`gpg_id`](#-xymon--client--gpg_id)
 * [`monitors`](#-xymon--client--monitors)
 * [`client_name`](#-xymon--client--client_name)
 * [`clientlaunch_config`](#-xymon--client--clientlaunch_config)
@@ -186,14 +185,6 @@ Default value: `undef`
 Data type: `Optional[String]`
 
 URL of the GPG key
-
-Default value: `undef`
-
-##### <a name="-xymon--client--gpg_id"></a>`gpg_id`
-
-Data type: `Optional[String]`
-
-Unused, apt stores the key from gpg_url as keyring
 
 Default value: `undef`
 
