@@ -12,7 +12,7 @@ fixtures:
       ref: '6.1.0'
     stdlib:
       repo: 'puppetlabs/stdlib'
-      ref: '9.7.0'
+      ref: '10.0.0'
     yumrepo_core:
       repo: 'puppetlabs/yumrepo_core'
       ref: '1.2.0'
