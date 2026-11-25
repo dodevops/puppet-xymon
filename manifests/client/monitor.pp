@@ -130,7 +130,7 @@ define xymon::client::monitor (
           $filename = $key
         }
         if ($value[source]) {
-          ensure_resource(
+          stdlib::ensure_resource(
             'file',
             "${files_path}/${filename}",
             {
@@ -143,7 +143,7 @@ define xymon::client::monitor (
             }
           )
         } elsif ($value[template]) {
-          ensure_resource(
+          stdlib::ensure_resource(
             'file',
             "${files_path}/${filename}",
             {
@@ -163,7 +163,7 @@ define xymon::client::monitor (
     }
 
     if ($sudo) {
-      ensure_resources(
+      stdlib::ensure_resources(
         'sudo::conf',
         $sudo,
         {
@@ -174,7 +174,7 @@ define xymon::client::monitor (
     }
 
     if ($packages) {
-      ensure_packages(
+      stdlib::ensure_packages(
         $packages,
         {
           ensure => $_ensure_packages,
